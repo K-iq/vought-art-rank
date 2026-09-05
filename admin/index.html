@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>VOUGHT ART • ADMIN</title>
+
+    <!-- GOOGLE FONT -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- ADMIN CSS -->
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+    <div class="admin-layout">
+
+
+        <!-- ==================================================
+             SIDEBAR
+        ================================================== -->
+
+        <aside class="sidebar">
+
+            <div class="sidebar-header">
+
+                <p class="system-text">
+                    VOUGHT ART
+                </p>
+
+                <h1>
+                    ADMIN
+                </h1>
+
+            </div>
+
+
+            <nav class="sidebar-nav">
+
+                <button
+                    class="nav-button active"
+                    data-section="dashboard"
+                >
+                    DASHBOARD
+                </button>
+
+                <button
+                    class="nav-button"
+                    data-section="users"
+                >
+                    USUÁRIOS
+                </button>
+
+                <button
+                    class="nav-button"
+                    data-section="challenge"
+                >
+                    DESAFIO
+                </button>
+
+                <button
+                    class="nav-button"
+                    data-section="preview"
+                >
+                    PRÉVIA RANK
+                </button>
+
+                <button
+                    class="nav-button"
+                    data-section="admins"
+                >
+                    ADMINS
+                </button>
+
+            </nav>
+
+
+            <div class="sidebar-footer">
+
+                <button class="logout-button">
+                    SAIR
+                </button>
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- ==================================================
+             MAIN CONTENT
+        ================================================== -->
+
+        <main class="admin-main">
+
+
+            <!-- ==================================================
+                 TOPBAR
+            ================================================== -->
+
+            <header class="topbar">
+
+                <div class="topbar-title">
+
+                    <p class="system-text">
+                        VOUGHT ART SYSTEM
+                    </p>
+
+                    <h2>
+                        CONTROL PANEL
+                    </h2>
+
+                </div>
+
+
+                <div class="admin-user">
+
+                    <span>
+                        ADMIN
+                    </span>
+
+                </div>
+
+            </header>
+
+
+
+            <!-- ==================================================
+                 DASHBOARD
+            ================================================== -->
+
+            <section
+                class="admin-section active"
+                id="section-dashboard"
+            >
+
+                <div class="section-header">
+
+                    <h2>
+                        DASHBOARD
+                    </h2>
+
+                    <p>
+                        SYSTEM OVERVIEW
+                    </p>
+
+                </div>
+
+
+                <!-- DASHBOARD CARDS -->
+
+                <div class="dashboard-grid">
+
+                    <div class="dashboard-card">
+
+                        <span class="card-label">
+                            USUÁRIOS
+                        </span>
+
+                        <strong id="dashboard-users">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="dashboard-card">
+
+                        <span class="card-label">
+                            RANK #1
+                        </span>
+
+                        <strong id="dashboard-top-player">
+                            ---
+                        </strong>
+
+                    </div>
+
+
+                    <div class="dashboard-card">
+
+                        <span class="card-label">
+                            XP TOTAL
+                        </span>
+
+                        <strong id="dashboard-total-xp">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="dashboard-card">
+
+                        <span class="card-label">
+                            DESAFIO
+                        </span>
+
+                        <strong id="dashboard-challenge">
+                            ACTIVE
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SYSTEM STATUS -->
+
+                <div class="dashboard-panel">
+
+                    <h3>
+                        SYSTEM STATUS
+                    </h3>
+
+
+                    <div class="status-line">
+
+                        <span>
+                            RANKING DATABASE
+                        </span>
+
+                        <span class="status-ok">
+                            ONLINE
+                        </span>
+
+                    </div>
+
+
+                    <div class="status-line">
+
+                        <span>
+                            WEEKLY CHALLENGE
+                        </span>
+
+                        <span class="status-ok">
+                            ONLINE
+                        </span>
+
+                    </div>
+
+
+                    <div class="status-line">
+
+                        <span>
+                            ADMIN SYSTEM
+                        </span>
+
+                        <span class="status-ok">
+                            ONLINE
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+           <!-- ==================================================
+				USUÁRIOS
+			================================================== -->
+
+			<section
+				class="admin-section"
+				id="section-users"
+			>
+
+				<div class="section-header">
+
+					<h2>
+					USUÁRIOS
+					</h2>
+
+						<p>
+							RANKING PARTICIPANTS
+						</p>
+
+				</div>
+
+
+			<!-- USER MANAGEMENT -->
+
+			<div class="users-panel">
+
+				<div class="users-toolbar">
+
+					<input
+						type="text"
+						id="user-search"
+						placeholder="BUSCAR USUÁRIO..."
+					>
+
+					<button
+						class="admin-action-button"
+						id="add-user-button"
+					>
+						+ ADICIONAR
+					</button>
+
+				</div>
+
+
+				<div class="users-table-wrapper">
+
+					<table class="users-table">
+
+						<thead>
+
+							<tr>
+
+								<th>
+									#
+								</th>
+
+								<th>
+									NOME
+								</th>
+
+								<th>
+									XP
+								</th>
+
+								<th>
+									NÍVEL
+								</th>
+
+								<th>
+									AÇÕES
+								</th>
+
+							</tr>
+
+						</thead>
+
+
+						<tbody id="users-table-body">
+
+							<!-- USUÁRIOS INSERIDOS PELO JAVASCRIPT -->
+
+						</tbody>
+
+					</table>
+
+				</div>
+
+			</div>
+
+		</section>
+
+
+
+            <!-- ==================================================
+                 DESAFIO
+            ================================================== -->
+
+            <section class="admin-section" id="section-challenge">
+			<div class="section-header">
+				<h2>DESAFIO SEMANAL</h2>
+				<p>WEEKLY CHALLENGE</p>
+			</div>
+
+			<div class="challenge-panel">
+				<div class="challenge-form">
+
+					<div class="form-group">
+						<label for="challenge-title">TÍTULO</label>
+						<input
+							type="text"
+							id="challenge-title"
+							placeholder="ENTER CHALLENGE TITLE"
+							maxlength="100"
+						>
+					</div>
+
+					<div class="form-group">
+						<label for="challenge-description">SOBRE</label>
+						<textarea
+							id="challenge-description"
+							placeholder="ENTER CHALLENGE DESCRIPTION"
+						></textarea>
+					</div>
+
+					<div class="form-group">
+						<label for="challenge-reward">RECOMPENSA</label>
+						<input
+							type="number"
+							id="challenge-reward"
+							placeholder="300"
+							min="0"
+							step="1"
+						>
+					</div>
+
+					<div class="challenge-actions">
+						<button type="button" class="modal-submit" id="save-challenge-button">
+							SALVAR DESAFIO
+						</button>
+					</div>
+
+				</div>
+			</div>
+		</section>
+
+
+
+
+            <!-- ==================================================
+                 PRÉVIA DO RANKING
+            ================================================== -->
+
+            <section class="admin-section" id="section-preview">
+				<div class="section-header">
+					<h2>PRÉVIA RANK</h2>
+					<p>LIVE RANKING PREVIEW</p>
+				</div>
+		
+				<div class="preview-panel">
+
+					<div class="preview-header">
+						<div>
+							<p class="system-text">VOUGHT ART</p>
+							<h3>HIGH SCORES</h3>
+						</div>
+
+						<div class="preview-status">
+							<span></span>
+							LIVE
+						</div>
+					</div>
+
+					<div class="preview-ranking" id="preview-ranking">
+						<!-- Ranking será gerado pelo JavaScript -->
+					</div>
+
+				</div>
+			</section>
+
+
+
+            <!-- ==================================================
+                 ADMINS
+            ================================================== -->
+
+            <section
+                class="admin-section"
+                id="section-admins"
+            >
+
+                <div class="section-header">
+
+                    <h2>
+                        ADMINS
+                    </h2>
+
+                    <p>
+                        ADMINISTRATOR MANAGEMENT
+                    </p>
+
+                </div>
+
+
+                <div class="admin-management">
+
+    <div class="admin-management-header">
+
+        <div>
+            <h3>
+                ADMINISTRADORES
+            </h3>
+
+            <p>
+                CONTAS COM ACESSO AO PAINEL
+            </p>
+        </div>
+
+        <button
+            type="button"
+            class="modal-submit"
+            id="add-admin-button"
+        >
+            + ADICIONAR ADMIN
+        </button>
+
+    </div>
+
+
+    <div class="admins-table-wrapper">
+
+        <table class="admins-table">
+
+            <thead>
+                <tr>
+                    <th>LOGIN</th>
+                    <th>NOME</th>
+                    <th>AÇÕES</th>
+                </tr>
+            </thead>
+
+            <tbody id="admins-table-body">
+                <!-- Administradores serão inseridos pelo JavaScript -->
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <div class="admin-log">
+
+        <div class="admin-log-header">
+
+            <div>
+                <h3>
+                    ÚLTIMAS AÇÕES
+                </h3>
+
+                <p>
+                    ACTIVITY LOG
+                </p>
+            </div>
+
+        </div>
+
+        <div
+            class="admin-log-list"
+            id="admin-log-list"
+        >
+            <!-- Últimas 5 ações serão inseridas pelo JavaScript -->
+        </div>
+
+    </div>
+
+</div>
+
+            </section>
+
+
+        </main>
+
+    </div>
+	
+	<!-- ==================================================
+     MODAL • ADICIONAR ADMIN
+	================================================== -->
+
+	<div
+		class="modal-overlay"
+		id="add-admin-modal"
+	>
+
+		<div class="admin-modal">
+
+			<div class="modal-header">
+
+				<div>
+					<p class="system-text">
+						ADMIN MANAGEMENT
+					</p>
+
+					<h2>
+						ADD ADMIN
+					</h2>
+				</div>
+
+				<button
+					type="button"
+					class="modal-close"
+					id="add-admin-close"
+				>
+					×
+				</button>
+
+			</div>
+
+
+			<form
+				id="add-admin-form"
+				class="admin-form"
+			>
+
+				<div class="form-group">
+
+					<label for="add-admin-login">
+						LOGIN
+					</label>
+
+					<input
+						type="text"
+						id="add-admin-login"
+						name="login"
+						placeholder="ENTER LOGIN"
+						maxlength="30"
+						required
+					>
+
+				</div>
+
+
+				<div class="form-group">
+
+					<label for="add-admin-name">
+						NOME
+					</label>
+
+					<input
+						type="text"
+						id="add-admin-name"
+						name="nome"
+						placeholder="ENTER NAME"
+						maxlength="30"
+						required
+					>
+
+				</div>
+
+
+				<div class="form-group">
+
+					<label for="add-admin-password">
+						SENHA
+					</label>
+
+					<input
+						type="password"
+						id="add-admin-password"
+						name="senha"
+						placeholder="ENTER PASSWORD"
+						maxlength="100"
+						minlength="4"
+						required
+					>
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="modal-cancel"
+                    id="add-admin-cancel"
+                >
+                    CANCELAR
+                </button>
+
+                <button
+                    type="submit"
+                    class="modal-submit"
+                >
+                    ADICIONAR
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- ==================================================
+     MODAL • EDITAR ADMIN
+================================================== -->
+
+<div
+    class="modal-overlay"
+    id="edit-admin-modal"
+>
+
+    <div class="admin-modal">
+
+        <div class="modal-header">
+
+            <div>
+                <p class="system-text">
+                    ADMIN MANAGEMENT
+                </p>
+
+                <h2>
+                    EDIT ADMIN
+                </h2>
+            </div>
+
+            <button
+                type="button"
+                class="modal-close"
+                id="edit-admin-close"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <form
+            id="edit-admin-form"
+            class="admin-form"
+        >
+
+            <div class="form-group">
+
+                <label for="edit-admin-login">
+                    LOGIN
+                </label>
+
+                <input
+                    type="text"
+                    id="edit-admin-login"
+                    name="login"
+                    placeholder="ENTER LOGIN"
+                    maxlength="30"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="edit-admin-name">
+                    NOME
+                </label>
+
+                <input
+                    type="text"
+                    id="edit-admin-name"
+                    name="nome"
+                    placeholder="ENTER NAME"
+                    maxlength="30"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="edit-admin-password">
+                    NOVA SENHA
+                </label>
+
+                <input
+                    type="password"
+                    id="edit-admin-password"
+                    name="senha"
+                    placeholder="DEIXE VAZIO PARA MANTER"
+                    maxlength="100"
+					minlength="4"
+                >
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="modal-cancel"
+                    id="edit-admin-cancel"
+                >
+                    CANCELAR
+                </button>
+
+                <button
+                    type="submit"
+                    class="modal-submit"
+                >
+                    SALVAR
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+	
+	<!-- ADD USER MODAL -->
+
+<div class="modal-overlay" id="add-user-modal">
+
+    <div class="admin-modal">
+
+        <div class="modal-header">
+
+            <div>
+                <p class="system-text">USER MANAGEMENT</p>
+                <h2>ADD USER</h2>
+            </div>
+
+            <button
+                type="button"
+                class="modal-close"
+                id="add-user-close"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="add-user-form" class="admin-form">
+
+            <div class="form-group">
+
+                <label for="add-user-name">
+                    NOME
+                </label>
+
+                <input
+                    type="text"
+                    id="add-user-name"
+                    name="nome"
+                    placeholder="ENTER NAME"
+                    maxlength="30"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="add-user-points">
+                    XP INICIAL
+                </label>
+
+                <input
+                    type="number"
+                    id="add-user-points"
+                    name="pontos"
+                    placeholder="0"
+                    min="0"
+                    step="1"
+                    required
+                >
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="modal-cancel"
+                    id="add-user-cancel"
+                >
+                    CANCELAR
+                </button>
+
+                <button
+                    type="submit"
+                    class="modal-submit"
+                >
+                    ADICIONAR
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+
+<!-- EDIT USER MODAL -->
+
+<div class="modal-overlay" id="edit-user-modal">
+
+    <div class="admin-modal">
+
+        <div class="modal-header">
+
+            <div>
+                <p class="system-text">USER MANAGEMENT</p>
+                <h2>EDIT USER</h2>
+            </div>
+
+            <button
+                type="button"
+                class="modal-close"
+                id="edit-user-close"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="edit-user-form" class="admin-form">
+
+            <!-- FOTO ATUAL -->
+
+            <div class="form-group">
+
+                <label>
+                    FOTO ATUAL
+                </label>
+
+                <div class="edit-user-photo">
+                    <img
+                        id="edit-user-current-photo"
+                        src="../assets/profile/default.png"
+                        alt="Foto atual do usuário"
+                    >
+                </div>
+
+            </div>
+
+
+            <!-- NOVA FOTO -->
+
+            <div class="image-upload">
+			
+				<label for="edit-user-photo" class="image-upload-button">
+				
+					<span>[ + ]</span>
+					
+					<span id="edit-user-photo-text">ALTERAR IMAGEM</span>
+					
+				</label>
+
+				<input type="file" id="edit-user-photo" name="foto"
+				
+					accept="image/png,image/jpeg,image/webp">
+					
+
+				<small>APENAS PNG</small>
+				
+			</div>
+			
+
+            <!-- NOME -->
+
+            <div class="form-group">
+
+                <label for="edit-user-name">
+                    NOME
+                </label>
+
+                <input
+                    type="text"
+                    id="edit-user-name"
+                    name="nome"
+                    placeholder="ENTER NAME"
+                    maxlength="30"
+                    required
+                >
+
+            </div>
+
+
+            <!-- XP -->
+
+            <div class="form-group">
+
+                <label for="edit-user-points">
+                    XP
+                </label>
+
+                <input
+                    type="number"
+                    id="edit-user-points"
+                    name="pontos"
+                    placeholder="0"
+                    min="0"
+                    step="1"
+                    required
+                >
+
+            </div>
+
+
+            <!-- AÇÕES -->
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="modal-cancel"
+                    id="edit-user-cancel"
+                >
+                    CANCELAR
+                </button>
+
+                <button
+                    type="submit"
+                    class="modal-submit"
+                >
+                    SALVAR
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+    <!-- ADMIN JAVASCRIPT -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

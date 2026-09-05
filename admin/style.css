@@ -1,0 +1,1821 @@
+/* ==========================================================
+   VOUGHT ART • ADMIN SYSTEM
+========================================================== */
+
+
+/* ==========================================================
+   RESET / BASE
+========================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+
+    background: #080808;
+    color: #ffffff;
+
+    font-family: "Press Start 2P", monospace;
+
+    overflow-x: hidden;
+}
+
+/* ---------- LOGIN PAGE CENTERING ---------- */
+
+.login-page {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 25px;
+}
+
+/* ==========================================================
+   LOGIN
+========================================================== */
+
+
+/* ---------- LOGIN SCREEN ---------- */
+
+.login-screen {
+    width: min(500px, 100%);
+
+    padding: 45px 40px;
+
+    background: #101010;
+
+    border: 3px solid #00d9ff;
+}
+
+
+/* ---------- LOGIN HEADER ---------- */
+
+.login-header {
+    text-align: center;
+
+    margin-bottom: 45px;
+}
+
+.login-header .system-text {
+    margin: 0 0 25px;
+
+    color: #00d9ff;
+
+    font-size: 9px;
+    line-height: 1.8;
+}
+
+.login-header h1 {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 25px;
+    line-height: 1.5;
+}
+
+.login-header .subtitle {
+    margin: 12px 0 0;
+
+    color: #888888;
+
+    font-size: 9px;
+    line-height: 1.8;
+}
+
+
+/* ---------- LOGIN FORM ---------- */
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+
+    gap: 25px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+.input-group label {
+    color: #00d9ff;
+
+    font-size: 9px;
+}
+
+.input-group input {
+    width: 100%;
+
+    padding: 15px;
+
+    background: #050505;
+
+    border: 2px solid #555555;
+
+    color: #ffffff;
+
+    font-family: "Press Start 2P", monospace;
+    font-size: 10px;
+
+    outline: none;
+}
+
+.input-group input::placeholder {
+    color: #555555;
+}
+
+.input-group input:focus {
+    border-color: #00d9ff;
+}
+
+
+/* ---------- LOGIN BUTTON ---------- */
+
+.login-button {
+    margin-top: 10px;
+
+    width: 100%;
+
+    padding: 17px;
+
+    background: #00d9ff;
+
+    border: 2px solid #00d9ff;
+
+    color: #000000;
+
+    font-family: "Press Start 2P", monospace;
+    font-size: 10px;
+
+    cursor: pointer;
+}
+
+.login-button:hover {
+    background: #ffffff;
+
+    border-color: #ffffff;
+}
+
+.login-button:active {
+    transform: scale(0.98);
+}
+
+
+/* ---------- LOGIN FOOTER ---------- */
+
+.login-footer {
+    margin-top: 40px;
+
+    text-align: center;
+
+    color: #555555;
+
+    font-size: 7px;
+
+    line-height: 2;
+}
+
+.login-footer p {
+    margin: 5px 0;
+}
+
+
+/* ==========================================================
+   ADMIN PANEL
+========================================================== */
+
+
+/* ---------- MAIN LAYOUT ---------- */
+
+.admin-layout {
+    min-height: 100vh;
+
+    display: flex;
+}
+
+
+/* ==========================================================
+   SIDEBAR
+========================================================== */
+
+.sidebar {
+    width: 250px;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #101010;
+
+    border-right: 3px solid #00d9ff;
+}
+
+
+/* ---------- SIDEBAR HEADER ---------- */
+
+.sidebar-header {
+    padding: 35px 25px;
+
+    border-bottom: 2px solid #333333;
+
+    text-align: center;
+}
+
+.sidebar-header .system-text {
+    margin: 0 0 18px;
+
+    color: #00d9ff;
+
+    font-size: 8px;
+    line-height: 1.8;
+}
+
+.sidebar-header h1 {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 22px;
+    line-height: 1.5;
+}
+
+
+/* ---------- SIDEBAR NAVIGATION ---------- */
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+
+    padding: 25px 15px;
+
+    gap: 8px;
+}
+
+.nav-button {
+    width: 100%;
+
+    padding: 17px 12px;
+
+    background: transparent;
+
+    border: 2px solid transparent;
+
+    color: #888888;
+
+    font-family: "Press Start 2P", monospace;
+    font-size: 8px;
+
+    text-align: left;
+
+    cursor: pointer;
+}
+
+.nav-button:hover {
+    color: #ffffff;
+
+    background: #181818;
+
+    border-color: #444444;
+}
+
+.nav-button.active {
+    color: #000000;
+
+    background: #00d9ff;
+
+    border-color: #00d9ff;
+}
+
+
+/* ---------- SIDEBAR FOOTER ---------- */
+
+.sidebar-footer {
+    margin-top: auto;
+
+    padding: 20px 15px;
+
+    border-top: 2px solid #333333;
+}
+
+.logout-button {
+    width: 100%;
+
+    padding: 15px;
+
+    background: transparent;
+
+    border: 2px solid #555555;
+
+    color: #888888;
+
+    font-family: "Press Start 2P", monospace;
+    font-size: 8px;
+
+    cursor: pointer;
+}
+
+.logout-button:hover {
+    color: #ffffff;
+
+    border-color: #ffffff;
+}
+
+
+/* ==========================================================
+   ADMIN MAIN
+========================================================== */
+
+.admin-main {
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 35px 40px;
+}
+
+
+/* ==========================================================
+   TOPBAR
+========================================================== */
+
+.topbar {
+    min-height: 80px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding-bottom: 25px;
+
+    border-bottom: 2px solid #333333;
+}
+
+.topbar-title .system-text {
+    margin: 0 0 12px;
+
+    color: #00d9ff;
+
+    font-size: 7px;
+    line-height: 1.8;
+}
+
+.topbar h2 {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.admin-user {
+    padding: 12px 15px;
+
+    border: 2px solid #555555;
+
+    color: #888888;
+
+    font-size: 7px;
+}
+
+
+/* ==========================================================
+   ADMIN SECTIONS
+========================================================== */
+
+.admin-section {
+    display: none;
+
+    padding-top: 35px;
+}
+
+.admin-section.active {
+    display: block;
+}
+
+
+/* ---------- SECTION HEADER ---------- */
+
+.section-header {
+    margin-bottom: 30px;
+}
+
+.section-header h2 {
+    margin: 0 0 12px;
+
+    color: #ffffff;
+
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.section-header p {
+    margin: 0;
+
+    color: #666666;
+
+    font-size: 7px;
+    line-height: 1.8;
+}
+
+
+/* ==========================================================
+   DASHBOARD
+========================================================== */
+
+.dashboard-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 15px;
+
+    margin-bottom: 25px;
+}
+
+
+/* ---------- DASHBOARD CARDS ---------- */
+
+.dashboard-card {
+    min-height: 135px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    padding: 20px;
+
+    background: #101010;
+
+    border: 2px solid #333333;
+}
+
+.dashboard-card:hover {
+    border-color: #00d9ff;
+}
+
+.card-label {
+    color: #777777;
+
+    font-size: 7px;
+
+    line-height: 1.8;
+}
+
+.dashboard-card strong {
+    display: block;
+
+    color: #00d9ff;
+
+    font-size: 16px;
+
+    line-height: 1.5;
+
+    word-break: break-word;
+}
+
+
+/* ==========================================================
+   DASHBOARD STATUS
+========================================================== */
+
+.dashboard-panel {
+    padding: 25px;
+
+    background: #101010;
+
+    border: 2px solid #333333;
+}
+
+.dashboard-panel h3 {
+    margin: 0 0 25px;
+
+    color: #ffffff;
+
+    font-size: 10px;
+}
+
+
+/* ---------- STATUS LINE ---------- */
+
+.status-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 15px 0;
+
+    border-top: 1px solid #292929;
+
+    color: #777777;
+
+    font-size: 7px;
+
+    line-height: 1.8;
+}
+
+.status-line:last-child {
+    border-bottom: 1px solid #292929;
+}
+
+.status-ok {
+    color: #39ff14;
+}
+
+
+/* ==========================================================
+   PLACEHOLDER SECTIONS
+========================================================== */
+
+.section-placeholder {
+    min-height: 250px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px;
+
+    background: #101010;
+
+    border: 2px dashed #333333;
+
+    text-align: center;
+}
+
+.section-placeholder h3 {
+    margin: 0 0 20px;
+
+    color: #00d9ff;
+
+    font-size: 11px;
+
+    line-height: 1.8;
+}
+
+.section-placeholder p {
+    margin: 0;
+
+    max-width: 600px;
+
+    color: #666666;
+
+    font-size: 7px;
+
+    line-height: 2;
+}
+
+/* ==========================================================
+   USER MANAGEMENT
+========================================================== */
+
+.users-panel {
+    background: #101010;
+
+    border: 2px solid #333333;
+}
+
+/* ==========================================================
+   USER ACTIONS
+========================================================== */
+
+.user-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.user-edit-button,
+.user-remove-button {
+    padding: 8px 10px;
+
+    border: 2px solid;
+
+    font-family: "Press Start 2P", monospace;
+    font-size: 6px;
+
+    cursor: pointer;
+}
+
+.user-edit-button {
+    background: transparent;
+    border-color: #00d9ff;
+    color: #00d9ff;
+}
+
+.user-edit-button:hover {
+    background: #00d9ff;
+    color: #000000;
+}
+
+.user-remove-button {
+    background: transparent;
+    border-color: #555555;
+    color: #888888;
+}
+
+.user-remove-button:hover {
+    background: #555555;
+    color: #ffffff;
+}
+
+.user-edit-button:active,
+.user-remove-button:active {
+    transform: scale(0.97);
+}
+
+/* ---------- TOOLBAR ---------- */
+
+.users-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 20px;
+
+    border-bottom: 2px solid #333333;
+}
+
+#user-search {
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 14px;
+
+    background: #050505;
+
+    border: 2px solid #555555;
+
+    color: #ffffff;
+
+    font-family: "Press Start 2P", monospace;
+    font-size: 8px;
+
+    outline: none;
+}
+
+#user-search::placeholder {
+    color: #555555;
+}
+
+#user-search:focus {
+    border-color: #00d9ff;
+}
+
+
+/* ---------- ACTION BUTTON ---------- */
+
+.admin-action-button {
+    padding: 14px 18px;
+
+    background: #00d9ff;
+
+    border: 2px solid #00d9ff;
+
+    color: #000000;
+
+    font-family: "Press Start 2P", monospace;
+    font-size: 8px;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+}
+
+.admin-action-button:hover {
+    background: #ffffff;
+
+    border-color: #ffffff;
+}
+
+.admin-action-button:active {
+    transform: scale(0.98);
+}
+
+
+/* ---------- TABLE ---------- */
+
+.users-table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+.users-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    font-size: 8px;
+}
+
+
+/* ---------- TABLE HEADER ---------- */
+
+.users-table th {
+    padding: 18px 15px;
+
+    background: #181818;
+
+    border-bottom: 2px solid #333333;
+
+    color: #777777;
+
+    font-size: 7px;
+
+    text-align: left;
+
+    white-space: nowrap;
+}
+
+
+/* ---------- TABLE CELLS ---------- */
+
+.users-table td {
+    padding: 18px 15px;
+
+    border-bottom: 1px solid #292929;
+
+    color: #ffffff;
+
+    line-height: 1.8;
+
+    white-space: nowrap;
+}
+
+.users-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.users-table tbody tr:hover {
+    background: #151515;
+}
+
+
+/* ---------- POSITION ---------- */
+
+.users-table td:first-child {
+    width: 60px;
+
+    color: #666666;
+}
+
+
+/* ---------- XP ---------- */
+
+.users-table td:nth-child(3) {
+    color: #00d9ff;
+}
+
+
+/* ---------- LEVEL ---------- */
+
+.users-table td:nth-child(4) {
+    color: #aaaaaa;
+}
+
+
+/* ---------- EMPTY STATE ---------- */
+
+.users-empty {
+    padding: 40px 20px;
+
+    color: #555555;
+
+    font-size: 8px;
+
+    text-align: center;
+}
+
+
+/* ==========================================================
+   ADD USER MODAL
+========================================================== */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    padding: 25px;
+
+    background: rgba(0, 0, 0, 0.75);
+
+    z-index: 1000;
+}
+
+.admin-modal {
+    width: 100%;
+    max-width: 550px;
+    max-height: calc(100vh - 30px);
+    overflow-y: auto;
+    box-sizing: border-box;
+    background: #101010;
+    border: 2px solid #333333;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6);
+
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 25px;
+
+    border-bottom: 2px solid #333333;
+}
+
+.modal-header h2 {
+    margin: 8px 0 0;
+
+    font-family: "Press Start 2P", monospace;
+    font-size: 18px;
+    color: #ffffff;
+}
+
+.modal-close {
+    width: 40px;
+    height: 40px;
+
+    background: transparent;
+    border: 2px solid #555555;
+
+    color: #ffffff;
+
+    font-family: Arial, sans-serif;
+    font-size: 25px;
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+.modal-close:hover {
+    background: #ffffff;
+    border-color: #ffffff;
+    color: #000000;
+}
+
+.admin-form {
+    padding: 25px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    font-family: "Press Start 2P", monospace;
+    font-size: 8px;
+    color: #777777;
+}
+
+.form-group input {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 14px;
+
+    background: #050505;
+    border: 2px solid #555555;
+
+    color: #ffffff;
+
+    font-family: "Press Start 2P", monospace;
+    font-size: 9px;
+
+    outline: none;
+}
+
+.form-group input::placeholder {
+    color: #444444;
+}
+
+.form-group input:focus {
+    border-color: #00d9ff;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    gap: 12px;
+
+    margin-top: 30px;
+}
+
+.modal-cancel,
+.modal-submit {
+    padding: 14px 18px;
+
+    border: 2px solid;
+
+    font-family: "Press Start 2P", monospace;
+    font-size: 8px;
+
+    cursor: pointer;
+}
+
+.modal-cancel {
+    background: transparent;
+    border-color: #555555;
+    color: #aaaaaa;
+}
+
+.modal-cancel:hover {
+    background: #222222;
+    color: #ffffff;
+}
+
+.modal-submit {
+    background: #00d9ff;
+    border-color: #00d9ff;
+    color: #000000;
+}
+
+.modal-submit:hover {
+    background: #ffffff;
+    border-color: #ffffff;
+}
+
+.modal-cancel:active,
+.modal-submit:active,
+.modal-close:active {
+    transform: scale(0.98);
+}
+
+/* ==========================================================
+   EDIT USER MODAL
+========================================================== */
+
+.edit-user-photo {
+    width: 120px;
+    height: 120px;
+
+    background: #050505;
+    border: 2px solid #333333;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+}
+
+.edit-user-photo img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    image-rendering: auto;
+}
+
+.image-upload {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#edit-user-photo {
+    display: none;
+}
+
+.image-upload-button {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px;
+    background: #050505;
+    border: 2px solid #555555;
+    color: #ffffff;
+    font-family: "Press Start 2P", monospace;
+    font-size: 8px;
+    cursor: pointer;
+}
+
+.image-upload-button span:first-child {
+    color: #00d9ff;
+}
+
+.image-upload-button:hover {
+    border-color: #00d9ff;
+    color: #00d9ff;
+}
+
+.image-upload-button:active {
+    transform: scale(0.99);
+}
+
+.image-upload small {
+    color: #777777;
+    font-family: "Press Start 2P", monospace;
+    font-size: 7px;
+}
+
+
+/* ==========================================================
+   EDIT USER • MOBILE
+========================================================== */
+
+@media (max-width: 700px) {
+
+    .edit-user-photo {
+        width: 100px;
+        height: 100px;
+    }
+
+}
+
+
+/* ==========================================================
+   MODAL • MOBILE
+========================================================== */
+
+@media (max-width: 700px) {
+
+    .modal-overlay {
+        padding: 15px;
+    }
+
+    .modal-header {
+        padding: 20px;
+    }
+
+    .modal-header h2 {
+        font-size: 14px;
+    }
+
+    .admin-form {
+        padding: 20px;
+    }
+
+    .modal-actions {
+        flex-direction: column;
+    }
+
+    .modal-cancel,
+    .modal-submit {
+        width: 100%;
+    }
+
+}
+
+/* ==========================================================
+   USER MANAGEMENT MOBILE
+========================================================== */
+
+@media (max-width: 700px) {
+
+    .users-toolbar {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    #user-search {
+        width: 100%;
+    }
+
+    .admin-action-button {
+        width: 100%;
+    }
+
+    .users-table {
+        min-width: 600px;
+    }
+
+    .users-table th,
+    .users-table td {
+        padding: 15px 12px;
+
+        font-size: 7px;
+    }
+
+}
+
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@media (max-width: 1000px) {
+
+    .sidebar {
+        width: 220px;
+    }
+
+    .admin-main {
+        padding: 30px;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+/* ==========================================================
+   LOGIN MOBILE
+========================================================== */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 20px;
+    }
+
+    .login-screen {
+        padding: 35px 25px;
+    }
+
+    .login-header h1 {
+        font-size: 21px;
+    }
+
+    .login-header .system-text {
+        font-size: 8px;
+    }
+
+    .login-header .subtitle {
+        font-size: 8px;
+    }
+
+    .input-group label {
+        font-size: 8px;
+    }
+
+    .input-group input {
+        padding: 14px;
+
+        font-size: 9px;
+    }
+
+    .login-button {
+        padding: 16px;
+
+        font-size: 9px;
+    }
+
+    .login-footer {
+        font-size: 6px;
+    }
+
+}
+
+
+/* ==========================================================
+   ADMIN MOBILE
+========================================================== */
+
+@media (max-width: 700px) {
+
+    .admin-layout {
+        display: block;
+    }
+
+
+    /* ---------- SIDEBAR ---------- */
+
+    .sidebar {
+        width: 100%;
+        min-height: auto;
+
+        border-right: none;
+        border-bottom: 3px solid #00d9ff;
+    }
+
+    .sidebar-header {
+        padding: 25px 20px;
+    }
+
+    .sidebar-header .system-text {
+        margin-bottom: 12px;
+
+        font-size: 7px;
+    }
+
+    .sidebar-header h1 {
+        font-size: 19px;
+    }
+
+
+    /* ---------- NAVIGATION ---------- */
+
+    .sidebar-nav {
+        display: grid;
+
+        grid-template-columns: repeat(2, 1fr);
+
+        padding: 15px;
+
+        gap: 8px;
+    }
+
+    .nav-button {
+        padding: 14px 10px;
+
+        font-size: 7px;
+
+        text-align: center;
+    }
+
+
+    /* ---------- SIDEBAR FOOTER ---------- */
+
+    .sidebar-footer {
+        margin-top: 0;
+
+        padding: 15px;
+
+        border-top: 2px solid #333333;
+    }
+
+
+    /* ---------- MAIN ---------- */
+
+    .admin-main {
+        padding: 25px 18px;
+    }
+
+
+    /* ---------- TOPBAR ---------- */
+
+    .topbar {
+        min-height: auto;
+
+        align-items: flex-start;
+
+        gap: 20px;
+
+        padding-bottom: 20px;
+    }
+
+    .topbar-title .system-text {
+        font-size: 6px;
+    }
+
+    .topbar h2 {
+        font-size: 12px;
+    }
+
+    .admin-user {
+        padding: 10px;
+
+        font-size: 6px;
+    }
+
+
+    /* ---------- SECTIONS ---------- */
+
+    .admin-section {
+        padding-top: 25px;
+    }
+
+    .section-header {
+        margin-bottom: 22px;
+    }
+
+    .section-header h2 {
+        font-size: 14px;
+    }
+
+    .section-header p {
+        font-size: 6px;
+    }
+
+
+    /* ---------- DASHBOARD ---------- */
+
+    .dashboard-grid {
+        grid-template-columns: 1fr 1fr;
+
+        gap: 10px;
+    }
+
+    .dashboard-card {
+        min-height: 115px;
+
+        padding: 15px;
+    }
+
+    .card-label {
+        font-size: 6px;
+    }
+
+    .dashboard-card strong {
+        font-size: 13px;
+    }
+
+
+    /* ---------- STATUS ---------- */
+
+    .dashboard-panel {
+        padding: 18px;
+    }
+
+    .dashboard-panel h3 {
+        font-size: 8px;
+    }
+
+    .status-line {
+        gap: 15px;
+
+        font-size: 6px;
+    }
+
+
+    /* ---------- PLACEHOLDER ---------- */
+
+    .section-placeholder {
+        min-height: 220px;
+
+        padding: 20px;
+    }
+
+    .section-placeholder h3 {
+        font-size: 9px;
+    }
+
+    .section-placeholder p {
+        font-size: 6px;
+    }
+
+}
+
+
+/* ==========================================================
+   SMALL MOBILE
+========================================================== */
+
+@media (max-width: 430px) {
+
+    .sidebar-nav {
+        grid-template-columns: 1fr;
+    }
+
+    .nav-button {
+        text-align: left;
+    }
+
+    .topbar {
+        flex-direction: column;
+    }
+
+    .admin-user {
+        align-self: flex-start;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+/*----------DESAFIO DB------------*/
+
+.challenge-panel {
+    background: #101010;
+    border: 2px solid #333333;
+}
+
+.challenge-form {
+    width: 100%;
+    min-height: 140px;
+    box-sizing: border-box;
+    padding: 18px;
+    resize: vertical;;
+}
+
+.challenge-form textarea {
+    width: 100%;
+    min-height: 140px;
+    box-sizing: border-box;
+    padding: 14px;
+    resize: vertical;
+    background: #050505;
+    border: 2px solid #555555;
+    color: #ffffff;
+    font-family: "Press Start 2P", monospace;
+    font-size: 9px;
+    line-height: 1.8;
+    outline: none;
+}
+
+.challenge-form textarea::placeholder {
+    color: #444444;
+}
+
+.challenge-form textarea:focus {
+    border-color: #00d9ff;
+}
+
+.challenge-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 30px;
+}
+
+@media (max-width: 700px) {
+    .challenge-form {
+        padding: 20px;
+    }
+
+    .challenge-actions {
+        flex-direction: column;
+    }
+
+    .challenge-actions .modal-submit {
+        width: 100%;
+    }
+}
+
+/* =========================
+   PREVIEW RANKING
+========================= */
+
+.preview-panel {
+    background: #101010;
+    border: 2px solid #333333;
+    overflow: hidden;
+}
+
+.preview-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 25px;
+    border-bottom: 2px solid #333333;
+}
+
+.preview-header h3 {
+    margin: 8px 0 0;
+    color: #ffffff;
+    font-family: "Press Start 2P", monospace;
+    font-size: 16px;
+}
+
+.preview-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #00d9ff;
+    font-family: "Press Start 2P", monospace;
+    font-size: 8px;
+}
+
+.preview-status span {
+    width: 8px;
+    height: 8px;
+    background: #00d9ff;
+    border-radius: 50%;
+}
+
+.preview-ranking {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.preview-ranking-row {
+    display: grid;
+    grid-template-columns: 60px 1fr 120px 100px;
+    align-items: center;
+    gap: 15px;
+
+    min-height: 65px;
+    padding: 0 20px;
+
+    background: #080808;
+    border: 2px solid #2a2a2a;
+
+    font-family: "Press Start 2P", monospace;
+}
+
+.preview-position {
+    color: #777777;
+    font-size: 12px;
+}
+
+.preview-name {
+    color: #ffffff;
+    font-size: 10px;
+}
+
+.preview-xp {
+    color: #aaaaaa;
+    font-size: 9px;
+    text-align: right;
+}
+
+.preview-level {
+    color: #00d9ff;
+    font-size: 8px;
+    text-align: right;
+}
+
+/* TOP 3 */
+
+.preview-ranking-row.top-1 {
+    border-color: #d6a928;
+    min-height: 80px;
+}
+
+.preview-ranking-row.top-1 .preview-position {
+    color: #d6a928;
+}
+
+.preview-ranking-row.top-1 .preview-name {
+    color: #d6a928;
+}
+
+.preview-ranking-row.top-1 .preview-xp {
+    color: #d6a928;
+}
+
+.preview-ranking-row.top-2 {
+    border-color: #a9a9a9;
+    min-height: 75px;
+}
+
+.preview-ranking-row.top-2 .preview-position {
+    color: #a9a9a9;
+}
+
+.preview-ranking-row.top-2 .preview-name {
+    color: #a9a9a9;
+}
+
+.preview-ranking-row.top-2 .preview-xp {
+    color: #a9a9a9;
+}
+
+.preview-ranking-row.top-3 {
+    border-color: #b87333;
+    min-height: 70px;
+}
+
+.preview-ranking-row.top-3 .preview-position {
+    color: #b87333;
+}
+
+.preview-ranking-row.top-3 .preview-name {
+    color: #b87333;
+}
+
+.preview-ranking-row.top-3 .preview-xp {
+    color: #b87333;
+}
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+    .preview-header {
+        padding: 20px;
+    }
+
+    .preview-header h3 {
+        font-size: 12px;
+    }
+
+    .preview-ranking {
+        padding: 12px;
+    }
+
+    .preview-ranking-row {
+        grid-template-columns: 40px 1fr;
+        gap: 8px 12px;
+        padding: 12px;
+    }
+
+    .preview-xp,
+    .preview-level {
+        text-align: left;
+    }
+}
+
+/* =========================
+   ADMINISTRADORES
+========================= */
+
+.admin-management {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.admin-management-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    padding: 25px;
+
+    background: #101010;
+    border: 2px solid #333333;
+}
+
+.admin-management-header h3 {
+    margin: 0 0 10px;
+
+    color: #ffffff;
+    font-family: "Press Start 2P", monospace;
+    font-size: 13px;
+}
+
+.admin-management-header p {
+    margin: 0;
+
+    color: #777777;
+    font-family: "Press Start 2P", monospace;
+    font-size: 7px;
+}
+
+
+/* =========================
+   TABELA DE ADMINS
+========================= */
+
+.admins-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+
+    background: #101010;
+    border: 2px solid #333333;
+}
+
+.admins-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 500px;
+
+    font-family: "Press Start 2P", monospace;
+}
+
+.admins-table th {
+    padding: 15px;
+
+    background: #080808;
+    border-bottom: 2px solid #333333;
+
+    color: #777777;
+    font-size: 7px;
+    text-align: left;
+}
+
+.admins-table td {
+    padding: 18px 15px;
+
+    border-bottom: 1px solid #222222;
+
+    color: #ffffff;
+    font-size: 8px;
+}
+
+.admins-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.admins-table tbody tr:hover {
+    background: #151515;
+}
+
+
+/* =========================
+   AÇÕES
+========================= */
+
+.admin-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.admin-edit-button,
+.admin-remove-button {
+    padding: 8px 10px;
+
+    background: #080808;
+    border: 1px solid #555555;
+
+    color: #ffffff;
+
+    font-family: "Press Start 2P", monospace;
+    font-size: 6px;
+
+    cursor: pointer;
+}
+
+.admin-edit-button:hover {
+    border-color: #00d9ff;
+    color: #00d9ff;
+}
+
+.admin-remove-button:hover {
+    border-color: #ff4444;
+    color: #ff4444;
+}
+
+
+/* =========================
+   LOG
+========================= */
+
+.admin-log {
+    background: #101010;
+    border: 2px solid #333333;
+}
+
+.admin-log-header {
+    padding: 20px 25px;
+
+    border-bottom: 2px solid #333333;
+}
+
+.admin-log-header h3 {
+    margin: 0 0 8px;
+
+    color: #ffffff;
+    font-family: "Press Start 2P", monospace;
+    font-size: 11px;
+}
+
+.admin-log-header p {
+    margin: 0;
+
+    color: #777777;
+    font-family: "Press Start 2P", monospace;
+    font-size: 7px;
+}
+
+.admin-log-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-log-item {
+    padding: 15px 25px;
+
+    border-bottom: 1px solid #222222;
+
+    color: #aaaaaa;
+
+    font-family: "Press Start 2P", monospace;
+    font-size: 7px;
+    line-height: 1.8;
+}
+
+.admin-log-item:last-child {
+    border-bottom: none;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+    .admin-management-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .admin-management-header .modal-submit {
+        width: 100%;
+    }
+
+    .admin-log-item {
+        padding: 15px;
+    }
+
+}

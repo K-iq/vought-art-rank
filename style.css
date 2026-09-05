@@ -1,0 +1,1683 @@
+```css
+/* =========================================
+   VOUGHT ART ARCADE
+   Main Stylesheet
+   ========================================= */
+
+
+/* ---------- RESET ---------- */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* ---------- BASE ---------- */
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    background: #050505;
+    color: #f5f5f5;
+
+    font-family: "Press Start 2P", monospace;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 100vh;
+
+    overflow-x: hidden;
+}
+
+
+/* ---------- CRT SCREEN ---------- */
+
+body::before {
+    content: "";
+
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            transparent 45%,
+            rgba(0, 0, 0, 0.65) 100%
+        );
+
+    z-index: 10;
+}
+
+
+/* ---------- SCANLINES ---------- */
+
+.scanlines {
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: 20;
+
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.025) 0px,
+            rgba(255, 255, 255, 0.025) 1px,
+            rgba(0, 0, 0, 0.08) 2px,
+            rgba(0, 0, 0, 0.08) 4px
+        );
+
+    opacity: 0.7;
+}
+
+
+/* ---------- MAIN ARCADE SCREEN ---------- */
+
+.arcade-screen {
+    width: min(900px, 92vw);
+    min-height: 650px;
+
+    padding: 55px 60px;
+
+    position: relative;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #111 0%,
+            #080808 65%,
+            #030303 100%
+        );
+
+    border: 4px solid #00d9ff;
+
+    box-shadow:
+        0 0 8px #00d9ff,
+        0 0 25px #00d9ff,
+        inset 0 0 35px rgba(57, 255, 20, 0.08);
+
+    overflow: hidden;
+}
+
+
+/* ---------- SCREEN INNER BORDER ---------- */
+
+.arcade-screen::before {
+    content: "";
+
+    position: absolute;
+    inset: 12px;
+
+    border: 1px solid #00d9ff;
+
+    pointer-events: none;
+}
+
+
+/* ---------- HEADER ---------- */
+
+.header {
+    text-align: center;
+
+    margin-bottom: 55px;
+
+    position: relative;
+    z-index: 2;
+}
+
+
+/* System text */
+
+.system-text {
+    font-size: 10px;
+
+    color: #00d9ff;
+
+    opacity: 0.65;
+
+    margin-bottom: 30px;
+
+    letter-spacing: 2px;
+}
+
+
+/* Logo */
+
+.logo {
+    font-size: clamp(28px, 6vw, 54px);
+
+    color: #00d9ff;
+
+    letter-spacing: 8px;
+
+    text-shadow:
+        0 0 5px #00d9ff,
+        0 0 15px #00d9ff,
+        0 0 35px #00d9ff;
+
+    margin-bottom: 30px;
+}
+
+
+/* High Scores */
+
+.subtitle {
+    font-size: clamp(14px, 3vw, 20px);
+
+    color: #ffffff;
+
+    letter-spacing: 4px;
+
+    text-shadow:
+        0 0 6px white,
+        0 0 15px rgba(255, 255, 255, 0.4);
+}
+
+
+/* ---------- SCOREBOARD ---------- */
+
+.scoreboard {
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+
+    position: relative;
+    z-index: 2;
+}
+
+
+/* Individual score */
+
+.score {
+    display: grid;
+
+    grid-template-columns: 90px 1fr 120px 150px;
+
+    align-items: center;
+
+    min-height: 58px;
+
+    padding: 0 20px;
+
+    border-bottom: 1px solid #00d9ff;
+
+    color: #b7b7b7;
+
+    transition:
+        transform 0.15s ease,
+        background 0.15s ease;
+
+    position: relative;
+}
+
+
+/* Hover */
+
+.score:hover {
+    transform: translateX(8px);
+
+    background: rgba(57, 255, 20, 0.05);
+
+    color: white;
+}
+
+
+/* Position */
+
+.position {
+    font-size: 14px;
+
+    color: #777;
+
+    letter-spacing: 1px;
+}
+
+
+/* Name */
+
+.name {
+    font-size: 13px;
+
+    letter-spacing: 2px;
+}
+
+
+/* XP */
+
+.xp {
+    font-size: 12px;
+
+    text-align: right;
+
+    color: #888;
+}
+
+
+/* ---------- TOP 3 ---------- */
+
+
+/* 1ST — GOLD */
+
+.score.first {
+    min-height: 72px;
+
+    font-size: 18px;
+
+    color: #ffd700;
+
+    border-bottom-color: rgba(255, 215, 0, 0.5);
+
+    text-shadow:
+        0 0 5px rgba(255, 215, 0, 0.9),
+        0 0 15px rgba(255, 215, 0, 0.45);
+
+    animation:
+    score-enter 0.45s ease-out forwards 0.15s,
+    champion-glow 2s infinite alternate 0.60s;
+}
+
+.score.first .position,
+.score.first .xp {
+    color: #ffd700;
+
+    font-size: 16px;
+}
+
+
+/* 2ND — SILVER */
+
+.score.second {
+    min-height: 66px;
+
+    font-size: 16px;
+
+    color: #d8d8d8;
+
+    border-bottom-color: rgba(220, 220, 220, 0.4);
+
+    text-shadow:
+        0 0 5px rgba(255, 255, 255, 0.7),
+        0 0 12px rgba(255, 255, 255, 0.25);
+}
+
+.score.second .position,
+.score.second .xp {
+    color: #cfcfcf;
+
+    font-size: 14px;
+}
+
+
+/* 3RD — BRONZE */
+
+.score.third {
+    min-height: 62px;
+
+    font-size: 15px;
+
+    color: #cd7f32;
+
+    border-bottom-color: rgba(205, 127, 50, 0.45);
+
+    text-shadow:
+        0 0 5px rgba(205, 127, 50, 0.7),
+        0 0 12px rgba(205, 127, 50, 0.25);
+}
+
+.score.third .position,
+.score.third .xp {
+    color: #cd7f32;
+
+    font-size: 13px;
+}
+
+/* Do 4º lugar em diante */
+
+.score:not(.first):not(.second):not(.third) .position,
+.score:not(.first):not(.second):not(.third) .name,
+.score:not(.first):not(.second):not(.third) .level,
+.score:not(.first):not(.second):not(.third) .xp {
+
+    font-size: 11px;
+}
+
+
+/* ---------- CHAMPION GLOW ---------- */
+
+@keyframes champion-glow {
+
+    0%,
+    100% {
+        text-shadow:
+            0 0 5px rgba(255, 215, 0, 0.8),
+            0 0 15px rgba(255, 215, 0, 0.35);
+    }
+
+    50% {
+        text-shadow:
+            0 0 8px rgba(255, 215, 0, 1),
+            0 0 20px rgba(255, 215, 0, 0.6),
+            0 0 35px rgba(255, 215, 0, 0.25);
+    }
+}
+
+
+/* ---------- FOOTER ---------- */
+
+.footer {
+    text-align: center;
+
+    margin-top: 55px;
+
+    position: relative;
+    z-index: 2;
+}
+
+
+/* Insert Coin */
+
+.insert-coin {
+    font-size: clamp(12px, 2.5vw, 17px);
+
+    color: #00d9ff;
+
+    letter-spacing: 3px;
+
+    text-shadow:
+        0 0 5px #00d9ff,
+        0 0 15px #00d9ff;
+
+    animation: blink 1.2s steps(2, start) infinite;
+}
+
+
+/* Copyright */
+
+.credits {
+    margin-top: 28px;
+
+    font-size: 8px;
+
+    color: #444;
+
+    letter-spacing: 2px;
+}
+
+
+/* ---------- BLINK ---------- */
+
+@keyframes blink {
+    0%,
+    45% {
+        opacity: 1;
+    }
+
+    46%,
+    100% {
+        opacity: 0.2;
+    }
+}
+
+
+/* ---------- CRT FLICKER ---------- */
+
+@keyframes flicker {
+    0% {
+        opacity: 0.98;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.97;
+    }
+}
+
+.arcade-screen {
+    animation: flicker 0.15s infinite;
+}
+
+
+/* ---------- MOBILE ---------- */
+
+@media (max-width: 600px) {
+	
+    body {
+        align-items: flex-start;
+        padding: 25px 0;
+    }
+	
+	
+
+    .arcade-screen {
+        width: 94vw;
+        min-height: calc(100vh - 50px);
+
+        padding: 40px 20px;
+
+        border-width: 3px;
+    }
+
+    .arcade-screen::before {
+        inset: 8px;
+    }
+
+    .header {
+        margin-bottom: 35px;
+    }
+
+    .system-text {
+        font-size: 7px;
+
+        line-height: 1.8;
+
+        margin-bottom: 22px;
+    }
+
+    .logo {
+        font-size: 25px;
+
+        letter-spacing: 4px;
+
+        line-height: 1.5;
+    }
+
+    .subtitle {
+        font-size: 10px;
+
+        letter-spacing: 2px;
+    }
+
+    .score {
+		grid-template-columns: 45px minmax(0, 1fr) 65px 90px;
+
+		gap: 5px;
+
+		padding: 10px 8px;
+
+		min-height: 60px;
+	}
+
+    .position {
+        font-size: 10px;
+    }
+	
+	.score-header {
+		grid-template-columns: 45px minmax(0, 1fr) 65px 90px;
+	
+		gap: 5px;
+
+		padding: 10px 8px;
+
+		font-size: 8px;
+		
+		width: 100%;
+		box-sizing: border-box;
+	}
+	
+
+    .name {
+        font-size: 10px;
+
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+
+        white-space: nowrap;
+    }
+
+    .xp {
+
+        font-size: 8px;
+		white-space: nowrap;
+    }
+	
+	.score.first .level {
+		font-size: 10px;
+		white-space: nowrap;
+	}
+
+	.score.second .level {
+		font-size: 9px;
+		white-space: nowrap;
+	}
+
+	.score.third .level {
+		font-size: 9px;
+		white-space: nowrap;
+	}
+	
+	.score.first .xp {
+		font-size: 9px;
+		white-space: nowrap;
+	}
+
+	.score.second .xp {
+		font-size: 9px;
+		white-space: nowrap;
+	}
+
+	.score.third .xp {
+		font-size: 9px;
+		white-space: nowrap;
+	}
+	
+	.score.first .position {
+		font-size: 11px;
+	}
+
+	.score.second .position {
+		font-size: 10px;
+	}
+
+	.score.third .position {
+		font-size: 10px;
+	}
+
+    .footer {
+        margin-top: 40px;
+    }
+
+    .insert-coin {
+        font-size: 9px;
+
+        line-height: 1.8;
+
+        letter-spacing: 1px;
+    }
+
+    .credits {
+        font-size: 6px;
+    }
+}
+
+/* =========================================
+   BOTÃO DE MÚSICA
+   ========================================= */
+
+.music-button {
+
+    position: fixed;
+
+    bottom: 15px;
+    left: 15px;
+
+    background: #050505;
+
+    border: 2px solid #00d9ff;
+
+    padding: 8px 10px;
+
+    font-family: "Press Start 2P", monospace;
+
+    font-size: 9px;
+
+    color: #00d9ff;
+
+    cursor: pointer;
+
+    text-shadow: 0 0 5px #00d9ff;
+
+    box-shadow:
+        0 0 5px #00d9ff,
+        inset 0 0 5px #00d9ff);
+
+    transition: 0.15s;
+
+    z-index: 10;
+}
+
+
+/* Quando passar o mouse */
+
+.music-button:hover {
+
+    transform: scale(1.05);
+
+    box-shadow:
+        0 0 8px #00d9ff,
+        0 0 15px #00d9ff;
+
+}
+
+
+/* Quando clicar */
+
+.music-button:active {
+
+    transform: scale(0.95);
+
+}
+
+/* =========================================
+   ANIMAÇÃO DE ENTRADA DO RANKING
+   ========================================= */
+
+.score {
+    opacity: 0;
+    transform: translateY(15px);
+    animation: score-enter 0.45s ease-out forwards;
+}
+
+
+/* Cada posição entra um pouco depois da anterior */
+
+.score:nth-child(1) {
+    animation-delay: 0.15s;
+}
+
+.score:nth-child(2) {
+    animation-delay: 0.30s;
+}
+
+.score:nth-child(3) {
+    animation-delay: 0.45s;
+}
+
+.score:nth-child(4) {
+    animation-delay: 0.60s;
+}
+
+.score:nth-child(5) {
+    animation-delay: 0.75s;
+}
+
+.score:nth-child(6) {
+    animation-delay: 0.90s;
+}
+
+.score:nth-child(7) {
+    animation-delay: 1.05s;
+}
+
+.score:nth-child(8) {
+    animation-delay: 1.20s;
+}
+
+.score:nth-child(9) {
+    animation-delay: 1.35s;
+}
+
+.score:nth-child(10) {
+    animation-delay: 1.50s;
+}
+
+
+/* Movimento de entrada */
+
+@keyframes score-enter {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateY(15px);
+
+        filter: brightness(0);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+        filter: brightness(1);
+
+    }
+
+}
+
+/* =========================================
+   CABEÇALHO DO PLACAR
+   ========================================= */
+
+.score-header {
+
+    display: grid;
+
+    grid-template-columns: 90px 1fr 120px 150px;
+
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 12px 15px;
+
+    margin-bottom: 5px;
+
+    color: #00d9ff;
+
+    font-size: 10px;
+
+    text-shadow:
+        0 0 5px #00d9ff,
+        0 0 10px #00d9ff;
+
+    border-top: 2px solid #00d9ff;
+
+    border-bottom: 2px solid #00d9ff;
+
+}
+
+
+/* Alinhamento das colunas */
+
+.score-header span:nth-child(1) {
+    text-align: center;
+}
+
+.score-header span:nth-child(2) {
+    text-align: left;
+}
+
+.score-header span:nth-child(3) {
+    text-align: center;
+}
+
+.score-header span:nth-child(4) {
+    text-align: right;
+}
+
+/* =========================================
+   LEVEL
+   ========================================= */
+
+.level {
+
+    text-align: center;
+
+    color: #00d9ff;
+
+    text-shadow:
+        0 0 5px #00d9ff;
+
+}
+
+/* Level do Top 3 */
+
+.first .level {
+
+    color: #ffd700;
+
+    text-shadow:
+        0 0 5px #ffd700,
+        0 0 10px #ffd700;
+
+}
+
+.second .level {
+
+    color: #c0c0c0;
+
+    text-shadow:
+        0 0 5px #c0c0c0,
+        0 0 10px #c0c0c0;
+
+}
+
+.third .level {
+
+    color: #cd7f32;
+
+    text-shadow:
+        0 0 5px #cd7f32,
+        0 0 10px #cd7f32;
+
+}
+
+/* =========================================
+   CRT BOOT
+   ========================================= */
+
+.crt-boot {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    z-index: 9999;
+
+    animation: crt-boot 0.9s ease-out forwards;
+    pointer-events: none;
+}
+
+.crt-boot::after {
+    content: "";
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: 100%;
+    height: 3px;
+
+    background: #00d9ff;
+
+    transform: translate(-50%, -50%) scaleX(0);
+
+    box-shadow:
+        0 0 5px #00d9ff,
+        0 0 15px #00d9ff;
+
+    animation: crt-line 0.35s ease-out forwards;
+}
+
+
+@keyframes crt-line {
+
+    0% {
+        transform: translate(-50%, -50%) scaleX(0);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scaleX(1);
+    }
+
+}
+
+
+@keyframes crt-boot {
+
+    0% {
+        opacity: 1;
+    }
+
+    55% {
+        opacity: 1;
+    }
+
+    75% {
+        opacity: 0.8;
+    }
+
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+}
+
+/* =========================================
+   PLAYER PROFILE
+   ========================================= */
+
+.profile-overlay {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(0, 0, 0, 0.85);
+
+    z-index: 100;
+
+    /* Por enquanto o painel começa escondido */
+    opacity: 0;
+    visibility: hidden;
+}
+
+
+/* =========================================
+   PROFILE PANEL
+   ========================================= */
+
+.profile-panel {
+    position: relative;
+
+    width: min(700px, 90vw);
+    min-height: 500px;
+
+    padding: 35px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #101010 0%,
+            #050505 70%,
+            #000 100%
+        );
+
+    border: 4px solid #00d9ff;
+
+    box-shadow:
+        0 0 10px #00d9ff,
+        0 0 25px #00d9ff,
+        inset 0 0 20px rgba(0, 217, 255, 0.15);
+
+    color: white;
+}
+
+
+/* =========================================
+   CLOSE BUTTON
+   ========================================= */
+
+.profile-close {
+    position: absolute;
+
+    top: 15px;
+    right: 15px;
+
+    width: 40px;
+    height: 35px;
+
+    background: #050505;
+
+    border: 2px solid #00d9ff;
+
+    color: #00d9ff;
+
+    font-family: "Press Start 2P", monospace;
+    font-size: 12px;
+
+    cursor: pointer;
+
+    text-shadow: 0 0 5px #00d9ff;
+
+    box-shadow:
+        0 0 5px #00d9ff;
+
+    transition: 0.15s;
+}
+
+.profile-close:hover {
+    background: #00d9ff;
+    color: #000;
+
+    box-shadow:
+        0 0 10px #00d9ff,
+        0 0 20px #00d9ff;
+}
+
+.profile-close:active {
+    transform: scale(0.9);
+}
+
+
+/* =========================================
+   PROFILE HEADER
+   ========================================= */
+
+.profile-header {
+    display: flex;
+
+    align-items: center;
+
+    gap: 30px;
+
+    padding-bottom: 30px;
+
+    border-bottom: 2px solid #00d9ff;
+}
+
+
+/* =========================================
+   PROFILE PHOTO
+   ========================================= */
+
+.profile-photo {
+    width: 150px;
+    height: 150px;
+
+    flex-shrink: 0;
+
+    border: 3px solid #00d9ff;
+
+    background: #000;
+
+    box-shadow:
+        0 0 8px #00d9ff,
+        inset 0 0 10px rgba(0, 217, 255, 0.2);
+
+    overflow: hidden;
+}
+
+.profile-photo img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+
+/* =========================================
+   PLAYER INFORMATION
+   ========================================= */
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+.profile-info h2 {
+    margin: 0;
+
+    font-size: 22px;
+
+    color: #00d9ff;
+
+    text-shadow:
+        0 0 5px #00d9ff,
+        0 0 15px #00d9ff;
+}
+
+.profile-info p {
+    margin: 0;
+
+    font-size: 11px;
+
+    color: #fff;
+
+    text-shadow:
+        0 0 5px #fff;
+}
+
+
+/* =========================================
+   XP
+   ========================================= */
+
+.profile-xp {
+    margin-top: 30px;
+}
+
+.xp-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 10px;
+
+    font-size: 11px;
+
+    color: #00d9ff;
+
+    text-shadow:
+        0 0 5px #00d9ff;
+}
+
+.xp-bar {
+    width: 100%;
+    height: 20px;
+
+    background: #020202;
+
+    border: 2px solid #00d9ff;
+
+    box-shadow:
+        0 0 5px #00d9ff,
+        inset 0 0 8px rgba(0, 217, 255, 0.2);
+}
+
+.xp-fill {
+    width: 0%;
+    height: 100%;
+
+    background: #00d9ff;
+
+    box-shadow:
+        0 0 8px #00d9ff,
+        0 0 15px #00d9ff;
+
+    transition: width 0.8s ease-out;
+}
+
+
+/* =========================================
+   TITLES
+   ========================================= */
+
+.profile-titles {
+    margin-top: 30px;
+}
+
+.profile-titles h3 {
+    margin: 0 0 15px;
+
+    font-size: 12px;
+
+    color: #00d9ff;
+
+    text-shadow:
+        0 0 5px #00d9ff;
+
+    border-bottom: 1px solid #00d9ff;
+
+    padding-bottom: 10px;
+}
+
+#profile-title-list {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+}
+
+.profile-title {
+    padding: 10px 12px;
+
+    border: 2px solid #00d9ff;
+
+    background: rgba(0, 217, 255, 0.05);
+
+    color: #00d9ff;
+
+    font-size: 9px;
+
+    text-shadow:
+        0 0 5px currentColor;
+
+    box-shadow:
+        0 0 5px currentColor;
+}
+
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 600px) {
+
+    .profile-panel {
+        width: 88vw;
+
+        min-height: auto;
+
+        padding: 25px 20px;
+    }
+
+    .profile-header {
+        gap: 18px;
+    }
+
+    .profile-photo {
+        width: 100px;
+        height: 100px;
+    }
+
+    .profile-info h2 {
+        font-size: 16px;
+    }
+
+    .profile-info p {
+        font-size: 9px;
+    }
+
+    .profile-title {
+        font-size: 8px;
+    }
+}
+
+/* =========================================
+   UNLOCKED TITLE COLORS
+   ========================================= */
+
+.profile-title.title-level-1 {
+    color: #39ff14 !important;
+    border-color: #39ff14 !important;
+    box-shadow: 0 0 5px #39ff14;
+}
+
+.profile-title.title-level-5 {
+    color: #ffff00 !important;
+    border-color: #ffff00 !important;
+    box-shadow: 0 0 5px #ffff00;
+}
+
+.profile-title.title-level-10 {
+    color: #ff8c00 !important;
+    border-color: #ff8c00 !important;
+    box-shadow: 0 0 5px #ff8c00;
+}
+
+.profile-title.title-level-15 {
+    color: #ff3131 !important;
+    border-color: #ff3131 !important;
+    box-shadow: 0 0 5px #ff3131;
+}
+
+.profile-title.title-level-20 {
+    color: #3399ff !important;
+    border-color: #3399ff !important;
+    box-shadow: 0 0 5px #3399ff;
+}
+
+.profile-title.title-level-25 {
+    color: #00bfff !important;
+    border-color: #00bfff !important;
+    box-shadow: 0 0 5px #00bfff;
+}
+
+.profile-title.title-level-30 {
+    color: #a855f7 !important;
+    border-color: #a855f7 !important;
+    box-shadow: 0 0 5px #a855f7;
+}
+
+.profile-title.title-level-35 {
+    color: #ff4fd8 !important;
+    border-color: #ff4fd8 !important;
+    box-shadow: 0 0 5px #ff4fd8;
+}
+
+/* =========================================
+   EFEITOS ESPECIAIS — TÍTULOS FINAIS
+   ========================================= */
+
+/* 👑 LV. 40 — REI */
+.profile-title.title-level-40 {
+    color: #ffd700 !important;
+    border-color: #ffd700 !important;
+
+    box-shadow:
+        0 0 5px #ffd700,
+        0 0 12px rgba(255, 215, 0, 0.6);
+
+    text-shadow:
+        0 0 5px #ffd700,
+        0 0 10px #ffd700;
+}
+
+
+/* 🌟 LV. 45 — IMPERADOR */
+.profile-title.title-level-45 {
+    color: #ffffff !important;
+    border-color: #ffffff !important;
+
+    box-shadow:
+        0 0 5px #ffffff,
+        0 0 12px #00d9ff,
+        0 0 20px rgba(0, 217, 255, 0.5);
+
+    text-shadow:
+        0 0 5px #ffffff,
+        0 0 10px #00d9ff,
+        0 0 18px #00d9ff;
+}
+
+
+/* ⚡ LV. 50 — DEUS */
+.profile-title.title-level-50 {
+    color: #ffffff !important;
+    border-color: #ffffff !important;
+
+    box-shadow:
+        0 0 6px #ffffff,
+        0 0 15px #ffffff,
+        0 0 25px rgba(255, 79, 216, 0.5);
+
+    animation: legendary-title 1.5s infinite alternate;
+}
+
+
+/* ANIMAÇÃO DO DEUS */
+@keyframes legendary-title {
+    from {
+        text-shadow:
+            0 0 5px #00d9ff,
+            0 0 10px #a855f7,
+			0 0 25px #f2ca00;
+    }
+
+    to {
+        text-shadow:
+            0 0 5px #f2ca00,
+            0 0 12px #ffffff,
+            0 0 25px #00d9ff;
+    }
+}
+
+/* =========================================
+   XP PROGRESS
+   ========================================= */
+
+.xp-progress {
+    margin-top: 10px;
+    text-align: right;
+    color: #00d9ff;
+    font-family: "Press Start 2P", monospace;
+    font-size: 9px;
+    text-shadow: 0 0 5px #00d9ff;
+}
+
+/* =========================================
+   BOTÃO — DESAFIO SEMANAL
+   ========================================= */
+
+.challenge-button {
+    position: fixed;
+    bottom: 55px;
+    left: 20px;
+
+    padding: 13px 16px;
+
+    background: #080808;
+    border: 2px solid #ffd700;
+
+    color: #ffd700;
+
+    font-family: "Press Start 2P", monospace;
+    font-size: 8px;
+
+    cursor: pointer;
+
+    text-shadow:
+		0 0 5px #ffd700,
+		0 0 12px #ffd700,
+		0 0 20px #ffd700;
+
+    box-shadow:
+		0 0 8px #ffd700,
+		0 0 18px #ffd700,
+		0 0 30px rgba(255, 215, 0, 0.7),
+		inset 0 0 12px rgba(255, 215, 0, 0.25);
+
+    transition: all 0.2s ease;
+}
+
+.challenge-button:hover {
+    background: #ffd700;
+    color: #000;
+
+    text-shadow: none;
+
+    box-shadow:
+        0 0 8px #ffd700,
+        0 0 20px #ffd700,
+        0 0 35px rgba(255, 215, 0, 0.6);
+}
+
+.challenge-button:active {
+    transform: scale(0.95);
+}
+
+/* =========================================
+   WEEKLY CHALLENGE — PAINEL
+   ========================================= */
+
+.challenge-overlay {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(0, 0, 0, 0.85);
+
+    z-index: 100;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition: opacity 0.2s ease;
+}
+
+
+/* PAINEL */
+
+.challenge-panel {
+    position: relative;
+
+    width: min(700px, 90vw);
+    min-height: 400px;
+
+    padding: 40px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #101010 0%,
+            #050505 70%,
+            #000 100%
+        );
+
+    border: 4px solid #ffd700;
+
+    box-shadow:
+        0 0 10px #ffd700,
+        0 0 25px #ffd700,
+        inset 0 0 20px rgba(255, 215, 0, 0.15);
+
+    color: white;
+}
+
+
+/* BOTÃO X */
+
+.challenge-close {
+    position: absolute;
+
+    top: 15px;
+    right: 15px;
+
+    width: 40px;
+    height: 35px;
+
+    background: #050505;
+
+    border: 2px solid #ffd700;
+
+    color: #ffd700;
+
+    font-family: "Press Start 2P", monospace;
+    font-size: 12px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.challenge-close:hover {
+    background: #ffd700;
+    color: #000;
+
+    box-shadow:
+        0 0 8px #ffd700,
+        0 0 18px #ffd700;
+}
+
+.challenge-close:active {
+    transform: scale(0.9);
+}
+
+
+/* CABEÇALHO */
+
+.challenge-header {
+    text-align: center;
+
+    padding-bottom: 25px;
+
+    border-bottom: 2px solid #ffd700;
+}
+
+.challenge-header h2 {
+    margin: 0;
+
+    color: #ffd700;
+
+    font-family: "Press Start 2P", monospace;
+    font-size: 18px;
+
+    text-shadow:
+        0 0 5px #ffd700,
+        0 0 12px #ffd700;
+}
+
+
+/* CONTEÚDO */
+
+.challenge-content {
+    padding-top: 35px;
+
+    text-align: center;
+}
+
+.challenge-content h3 {
+    margin: 0 0 25px;
+
+    color: #ffffff;
+
+    font-family: "Press Start 2P", monospace;
+    font-size: 16px;
+
+    text-shadow:
+        0 0 5px #ffffff,
+        0 0 10px #00d9ff;
+}
+
+.challenge-content p {
+    max-width: 580px;
+
+    margin: 0 auto;
+
+    color: #cfcfcf;
+
+    font-family: "Press Start 2P", monospace;
+    font-size: 10px;
+
+    line-height: 2;
+
+    text-shadow: 0 0 4px rgba(255, 255, 255, 0.4);
+}
+
+
+/* RECOMPENSA */
+
+.challenge-reward {
+    display: inline-block;
+
+    margin-top: 35px;
+
+    padding: 14px 18px;
+
+    border: 2px solid #39ff14;
+
+    color: #39ff14;
+
+    font-family: "Press Start 2P", monospace;
+    font-size: 10px;
+
+    text-shadow:
+        0 0 5px #39ff14,
+        0 0 10px #39ff14;
+
+    box-shadow:
+        0 0 6px #39ff14,
+        inset 0 0 8px rgba(57, 255, 20, 0.1);
+}
+
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 600px) {
+
+    .challenge-panel {
+        width: 88vw;
+        min-height: 350px;
+
+        padding: 30px 20px;
+    }
+
+    .challenge-header h2 {
+        font-size: 13px;
+    }
+
+    .challenge-content h3 {
+        font-size: 12px;
+        line-height: 1.8;
+    }
+
+    .challenge-content p {
+        font-size: 8px;
+        line-height: 2;
+    }
+
+    .challenge-reward {
+        font-size: 8px;
+    }
+}
+
+/* =========================================
+   PARTICLES
+   ========================================= */
+
+#particles {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 5;
+}
+.particle {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: #ffffff;
+    box-shadow: 0 0 5px #ffffff;
+
+    opacity: 0;
+    animation: particle-float 2s ease-in-out forwards;
+}
+
+@keyframes particle-float {
+    0% {
+        opacity: 0;
+        transform: translate(0, 0) scale(0.5);
+    }
+
+    25% {
+        opacity: 0.8;
+    }
+
+    50% {
+        transform: translate(8px, -6px) scale(1);
+        opacity: 0.7;
+    }
+
+    75% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(15px, -12px) scale(0.5);
+    }
+}
+
+/* ---------- ELASTIC OVERSCROLL ---------- */
+
+.arcade-screen {
+    will-change: transform;
+}
+
+.arcade-screen.overscroll-return {
+    transition: transform 0.45s cubic-bezier(0.22, 1.35, 0.36, 1);
+}
+```

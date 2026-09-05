@@ -1,0 +1,50 @@
+{
+    "baseXP": 100,
+    "multiplicador": 1.5,
+    "titulos": [
+    {
+        "level": 1,
+        "titulo": "🌾 CAMPONÊS"
+    },
+    {
+        "level": 5,
+        "titulo": "🛒 VENDEDOR"
+    },
+    {
+        "level": 10,
+        "titulo": "🔨 ARTESÃO"
+    },
+    {
+        "level": 15,
+        "titulo": "⚔️ AVENTUREIRO"
+    },
+    {
+        "level": 20,
+        "titulo": "🛡️ CAVALEIRO"
+    },
+    {
+        "level": 25,
+        "titulo": "🏰 NOBRE"
+    },
+    {
+        "level": 30,
+        "titulo": "👑 LORD"
+    },
+    {
+        "level": 35,
+        "titulo": "⚜️ DUQUE"
+    },
+    {
+        "level": 40,
+        "titulo": "👑 REI"
+    },
+    {
+        "level": 45,
+        "titulo": "🌟 IMPERADOR"
+    },
+    {
+        "level": 50,
+        "titulo": "⚡ DEUS"
+    }
+]
+}

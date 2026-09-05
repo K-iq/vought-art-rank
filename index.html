@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>VOUGHT ART • HIGH SCORES</title>
+
+  <!-- Fonte retrô estilo arcade -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="crt-boot"></div>
+
+  <!-- Scanlines e brilho da tela (vamos animar no CSS) -->
+  <div class="scanlines"></div>
+  <div id="particles"></div>
+
+  <main class="arcade-screen">
+
+    <!-- Cabeçalho -->
+    <header class="header">
+
+      <p class="system-text">VOUGHT ARCADE SYSTEM v1.0</p>
+
+      <h1 class="logo">
+        VOUGHT ART
+      </h1>
+
+      <p class="subtitle">★ HIGH SCORES ★</p>
+
+    </header>
+
+    <!-- Ranking -->
+   <section class="scoreboard" id="scoreboard">
+    <!-- O ranking será carregado pelo JavaScript -->
+	</section>
+
+    <!-- Rodapé estilo fliperama -->
+    <footer class="footer">
+
+      <p class="insert-coin">INSERT COIN TO DRAW</p>
+
+      <p class="credits">
+        © VOUGHT ART ARCADE
+      </p>
+
+    </footer>
+
+  </main>
+  
+  <!-- =========================================
+     PLAYER PROFILE
+     ========================================= -->
+
+<div class="profile-overlay" id="profile-overlay">
+
+    <div class="profile-panel">
+
+        <button class="profile-close" id="profile-close">
+            X
+        </button>
+
+        <div class="profile-header">
+
+            <div class="profile-photo">
+                <img id="profile-image" src="" alt="Player">
+            </div>
+
+            <div class="profile-info">
+
+                <h2 id="profile-name">
+                    PLAYER
+                </h2>
+
+                <p id="profile-rank">
+                    RANK #1
+                </p>
+
+                <p id="profile-level">
+                    LV. 1
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="profile-xp">
+
+            <div class="xp-header">
+                <span>XP</span>
+                <span id="profile-xp">
+                    0 XP
+                </span>
+            </div>
+
+            <div class="xp-bar">
+				<div class="xp-fill" id="profile-xp-fill"></div>
+			</div>
+
+			<p class="xp-progress" id="profile-xp-progress">0 / 1000 XP</p>
+
+        </div>
+
+        <div class="profile-titles">
+
+            <h3>UNLOCKED TITLES</h3>
+
+            <div id="profile-title-list">
+                <!-- Títulos desbloqueados aparecerão aqui -->
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- WEEKLY CHALLENGE -->
+<div class="challenge-overlay" id="challenge-overlay">
+    <div class="challenge-panel">
+
+        <button class="challenge-close" id="challenge-close">X</button>
+
+        <div class="challenge-header">
+            <h2>★ WEEKLY CHALLENGE! ★</h2>
+        </div>
+
+        <div class="challenge-content">
+            <h3 id="challenge-title">LOADING...</h3>
+
+            <p id="challenge-description">
+                Loading challenge...
+            </p>
+
+            <div class="challenge-reward">
+                REWARD: <span id="challenge-reward">300 XP</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+  
+  <audio id="arcade-music" loop>
+    <source src="assets/sounds/arcade.mp3" type="audio/mpeg">
+	</audio>
+	
+	<audio id="click-sound">
+    <source src="assets/sfx/hit.mp3" type="audio/mpeg">
+    </audio>
+	
+	<button id="challenge-toggle" class="challenge-button">
+    ★ WEEKLY CHALLENGE!
+	</button>
+
+	<button id="music-toggle" class="music-button">
+    ♪ MUSIC: OFF
+	</button>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
