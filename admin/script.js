@@ -1,3 +1,53 @@
+const isAdminPage =
+    window.location.pathname.endsWith("/admin/index.html");
+
+if (isAdminPage) {
+
+    const session =
+        sessionStorage.getItem("vought_session");
+
+    if (!session) {
+        window.location.href = "login.html";
+    } else {
+
+        fetch(
+            "https://vought-arcade-api.vought-art-api.workers.dev/api/auth/me",
+            {
+                method: "GET",
+
+                headers: {
+                    "Authorization": `Bearer ${session}`
+                }
+            }
+        )
+        .then(async (response) => {
+
+            if (!response.ok) {
+                throw new Error("Unauthorized");
+            }
+
+            return response.json();
+        })
+        .then((data) => {
+
+            console.log(
+                "Authenticated as:",
+                data.login,
+                "Role:",
+                data.role
+            );
+
+        })
+        .catch(() => {
+
+            sessionStorage.removeItem("vought_session");
+
+            window.location.href = "login.html";
+        });
+    }
+}
+
+
 // ---------- ADMIN LOGIN ----------
 
 const loginForm = document.querySelector(".login-form");
