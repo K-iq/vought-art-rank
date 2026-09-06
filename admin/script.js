@@ -4,29 +4,65 @@ const loginForm = document.querySelector(".login-form");
 
 if (loginForm) {
 
-    loginForm.addEventListener("submit", (event) => {
+    loginForm.addEventListener("submit", async (event) => {
 
         event.preventDefault();
 
-        const login = document.querySelector("#login").value.trim();
-        const password = document.querySelector("#password").value;
+        const login =
+            document.querySelector("#login").value.trim();
 
-        // LOGIN TEMPORÁRIO
-        const ADMIN_LOGIN = "admin";
-        const ADMIN_PASSWORD = "1234";
+        const password =
+            document.querySelector("#password").value;
 
-        if (login === ADMIN_LOGIN && password === ADMIN_PASSWORD) {
+        if (login === "" || password === "") {
+            alert("PREENCHA LOGIN E SENHA.");
+            return;
+        }
+
+        try {
+
+            const response = await fetch(
+                "https://vought-arcade-api.vought-art-api.workers.dev/api/auth/login",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        login: login,
+                        password: password
+                    })
+                }
+            );
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                alert("INVALID LOGIN OR PASSWORD");
+                return;
+            }
+
+            if (!data.success || !data.session) {
+                alert("AUTHENTICATION ERROR");
+                return;
+            }
+
+            sessionStorage.setItem(
+                "vought_session",
+                data.session
+            );
 
             window.location.href = "index.html";
 
-        } else {
+        } catch (error) {
 
-            alert("INVALID LOGIN OR PASSWORD");
+            console.error(error);
 
+            alert("UNABLE TO CONNECT TO AUTHENTICATION SERVER.");
         }
-
     });
-
 }
 
 
