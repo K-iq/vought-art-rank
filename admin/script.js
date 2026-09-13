@@ -1567,49 +1567,258 @@ if (editUserModal) {
 
 }
 
+// ---------- EDITAR USUÁRIO ----------
+
 const editUserForm = document.querySelector("#edit-user-form");
 
 if (editUserForm) {
-    editUserForm.addEventListener("submit", (event) => {
+
+    editUserForm.addEventListener("submit", async (event) => {
+
         event.preventDefault();
 
         if (usuarioEditando === null) return;
 
-        const nome = editUserName.value.trim();
-        const pontos = Number(editUserPoints.value);
+        const nome =
+            editUserName.value.trim();
+
+        const pontos =
+            Number(editUserPoints.value);
+
+
+        // =========================
+        // VALIDAÇÕES
+        // =========================
 
         if (nome === "") {
-            alert("O nome do usuário não pode estar vazio.");
+
+            alert(
+                "O nome do usuário não pode estar vazio."
+            );
+
             editUserName.focus();
+
             return;
         }
 
-        if (!Number.isInteger(pontos) || pontos < 0) {
-            alert("O XP precisa ser um número inteiro válido.");
+
+        if (
+            !Number.isInteger(pontos) ||
+            pontos < 0
+        ) {
+
+            alert(
+                "O XP precisa ser um número inteiro válido."
+            );
+
             editUserPoints.focus();
+
             return;
         }
 
-        const usuarioExiste = rankingData.some((usuario, index) => {
-            if (index === usuarioEditando) return false;
 
-            return usuario.nome.toLowerCase() === nome.toLowerCase();
-        });
+        // =========================
+        // VERIFICAR DUPLICADO
+        // =========================
+
+        const usuarioExiste =
+            rankingData.some((usuario, index) => {
+
+                if (index === usuarioEditando) {
+                    return false;
+                }
+
+                return (
+                    usuario.nome.toLowerCase() ===
+                    nome.toLowerCase()
+                );
+
+            });
+
 
         if (usuarioExiste) {
-            alert("Já existe um usuário com esse nome.");
+
+            alert(
+                "Já existe um usuário com esse nome."
+            );
+
             editUserName.focus();
+
             return;
         }
 
-        rankingData[usuarioEditando].nome = nome;
-        rankingData[usuarioEditando].pontos = pontos;
 
-        rankingData.sort((a, b) => b.pontos - a.pontos);
+        // =========================
+        // CRIAR NOVO RANKING
+        // =========================
 
-        renderizarUsuarios();
-        fecharModalEdicao();
+        const novoRanking =
+            rankingData.map((usuario, index) => {
+
+                if (index === usuarioEditando) {
+
+                    return {
+                        ...usuario,
+                        nome: nome,
+                        pontos: pontos
+                    };
+
+                }
+
+                return usuario;
+
+            });
+
+
+        // =========================
+        // ORDENAR RANKING
+        // =========================
+
+        novoRanking.sort(
+            (a, b) => b.pontos - a.pontos
+        );
+
+
+        // =========================
+        // SESSÃO
+        // =========================
+
+        const session =
+            sessionStorage.getItem(
+                "vought_session"
+            );
+
+
+        if (!session) {
+
+            alert(
+                "Sessão inválida. Faça login novamente."
+            );
+
+            window.location.href =
+                "login.html";
+
+            return;
+        }
+
+
+        // =========================
+        // ENVIAR PARA API
+        // =========================
+
+        try {
+
+            const response =
+                await fetch(
+                    "https://vought-arcade-api.vought-art-api.workers.dev/api/ranking",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json",
+
+                            "Authorization":
+                                `Bearer ${session}`
+                        },
+
+                        body:
+                            JSON.stringify(
+                                novoRanking
+                            )
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            // =========================
+            // ERRO DE AUTENTICAÇÃO
+            // =========================
+
+            if (!response.ok) {
+
+                if (
+                    response.status === 401
+                ) {
+
+                    sessionStorage.removeItem(
+                        "vought_session"
+                    );
+
+                    alert(
+                        "Sua sessão expirou. Faça login novamente."
+                    );
+
+                    window.location.href =
+                        "login.html";
+
+                    return;
+                }
+
+
+                console.error(
+                    "Erro ao editar ranking:",
+                    data
+                );
+
+                alert(
+                    "Não foi possível salvar as alterações."
+                );
+
+                return;
+            }
+
+
+            // =========================
+            // ATUALIZAR RANKING LOCAL
+            // =========================
+
+            rankingData =
+                novoRanking;
+
+
+            renderizarUsuarios();
+
+
+            // =========================
+            // FECHAR MODAL
+            // =========================
+
+            fecharModalEdicao();
+
+
+            // =========================
+            // LOG
+            // =========================
+
+            registrarAcao(
+                `USUÁRIO EDITADO — ${nome}`
+            );
+
+
+            alert(
+                "Usuário atualizado com sucesso!"
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "Erro ao conectar com a API:",
+                error
+            );
+
+            alert(
+                "Não foi possível conectar ao servidor."
+            );
+
+        }
+
     });
+
 }
 
 // ---------- ADICIONAR NOVO USUÁRIO ----------
