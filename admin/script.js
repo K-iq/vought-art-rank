@@ -1824,6 +1824,18 @@ if (editUserForm) {
     editUserForm.addEventListener("submit", async (event) => {
 
         event.preventDefault();
+		
+		const editUserSubmit =
+			editUserForm.querySelector('button[type="submit"]');
+
+		if (editUserSubmit) {
+			editUserSubmit.disabled = true;
+
+			editUserSubmit.dataset.originalText =
+				editUserSubmit.textContent;
+
+			editUserSubmit.textContent = "SALVANDO...";
+		}
 
         if (usuarioEditando === null) return;
 
@@ -2073,6 +2085,13 @@ if (editUserForm) {
                 "Erro ao conectar com a API:",
                 error
             );
+			
+			if (editUserSubmit) {
+				editUserSubmit.disabled = false;
+	
+				editUserSubmit.textContent =
+					editUserSubmit.dataset.originalText || "SALVAR";
+			}
 
             alert(
                 "Não foi possível conectar ao servidor."
