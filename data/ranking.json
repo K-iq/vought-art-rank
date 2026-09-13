@@ -1,5 +1,9 @@
 [
     {
+        "nome": "PREDADOR",
+        "pontos": 50000
+    },
+    {
         "nome": "BIG",
         "pontos": 45251
     },
@@ -18,10 +22,6 @@
     {
         "nome": "MITTZ",
         "pontos": 820
-    },
-    {
-        "nome": "PREDADOR",
-        "pontos": 510
     },
     {
         "nome": "TESTE_K",
