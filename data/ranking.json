@@ -22,5 +22,9 @@
     {
         "nome": "PREDADOR",
         "pontos": 510
+    },
+    {
+        "nome": "TESTE_K",
+        "pontos": 300
     }
 ]
