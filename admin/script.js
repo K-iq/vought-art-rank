@@ -1324,6 +1324,9 @@ const addUserButton =
 
 const addUserModal =
     document.querySelector("#add-user-modal");
+	
+const addUserPhoto =
+    document.querySelector("#add-user-photo");
 
 const addUserClose =
     document.querySelector("#add-user-close");
@@ -1333,6 +1336,10 @@ const addUserCancel =
 
 
 function abrirModalUsuario() {
+	
+	if (addUserPhoto) {
+		addUserPhoto.value = "";
+	}
 
     if (!addUserModal) return;
 
@@ -1342,6 +1349,10 @@ function abrirModalUsuario() {
 
 
 function fecharModalUsuario() {
+	
+	if (addUserPhoto) {
+		addUserPhoto.value = "";
+	}
 
     if (!addUserModal) return;
 
@@ -1420,6 +1431,9 @@ const editUserPoints =
 
 const editUserCurrentPhoto =
     document.querySelector("#edit-user-current-photo");
+	
+const editUserPhoto =
+    document.querySelector("#edit-user-photo");
 
 
 // Usuário atualmente sendo editado
@@ -1438,6 +1452,10 @@ function abrirModalEdicao(index) {
 
 
     usuarioEditando = index;
+	
+	if (editUserPhoto) {
+		editUserPhoto.value = "";
+	}
 
 
     // Preencher nome
@@ -1477,6 +1495,10 @@ function fecharModalEdicao() {
     editUserModal.style.display = "none";
 
     usuarioEditando = null;
+
+    if (editUserPhoto) {
+        editUserPhoto.value = "";
+    }
 
 }
 
@@ -1722,6 +1744,77 @@ if (editUserModal) {
 
 }
 
+// ---------- UPLOAD DE FOTO DE PERFIL ----------
+
+async function enviarFotoPerfil(nome, arquivo, session) {
+
+    if (!arquivo) {
+        return;
+    }
+
+    // Garantir que seja PNG
+    if (arquivo.type !== "image/png") {
+        throw new Error("Apenas imagens PNG são permitidas.");
+    }
+
+    // Ler arquivo como Base64
+    const imagemBase64 = await new Promise((resolve, reject) => {
+
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            resolve(reader.result);
+        };
+
+        reader.onerror = () => {
+            reject(new Error("Não foi possível ler a imagem."));
+        };
+
+        reader.readAsDataURL(arquivo);
+    });
+
+    const response = await fetch(
+        "https://vought-arcade-api.vought-art-api.workers.dev/api/profile",
+        {
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${session}`
+            },
+
+            body: JSON.stringify({
+                nome: nome,
+                imagem: imagemBase64
+            })
+        }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+
+        if (response.status === 401) {
+            sessionStorage.removeItem("vought_session");
+
+            window.location.href = "login.html";
+
+            throw new Error("Sessão expirada.");
+        }
+
+        console.error(
+            "Erro ao enviar foto:",
+            data
+        );
+
+        throw new Error(
+            data.error || "Não foi possível salvar a foto."
+        );
+    }
+
+    return data;
+}
+
 // ---------- EDITAR USUÁRIO ----------
 
 const editUserForm = document.querySelector("#edit-user-form");
@@ -1842,6 +1935,11 @@ if (editUserForm) {
             sessionStorage.getItem(
                 "vought_session"
             );
+			
+		const foto =
+			editUserPhoto
+			? editUserPhoto.files[0]
+        : null;
 
 
         if (!session) {
@@ -1862,6 +1960,16 @@ if (editUserForm) {
         // =========================
 
         try {
+			
+			if (foto) {
+
+			await enviarFotoPerfil(
+        nome,
+        foto,
+        session
+			);
+
+		}
 
             const response =
                 await fetch(
@@ -1997,6 +2105,11 @@ if (addUserForm) {
 
         const pontos =
             Number(pointsInput.value);
+			
+		const foto =
+			addUserPhoto
+				? addUserPhoto.files[0]
+			: null;
 
 
         // =========================
@@ -2116,6 +2229,14 @@ if (addUserForm) {
         // =========================
 
         try {
+			
+			if (foto) {
+				await enviarFotoPerfil(
+					nome,
+					foto,
+					session
+				);
+			}
 
             const response =
                 await fetch(
