@@ -1504,26 +1504,181 @@ function configurarBotoesEditar() {
 
 }
 
+// ---------- REMOVER USUÁRIO ----------
+
 function configurarBotoesRemover() {
-    const removeButtons = document.querySelectorAll(".user-remove-button");
+
+    const removeButtons =
+        document.querySelectorAll(".user-remove-button");
 
     removeButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-            const index = Number(button.dataset.index);
-            const usuario = rankingData[index];
+
+        button.addEventListener("click", async () => {
+
+            const index =
+                Number(button.dataset.index);
+
+            const usuario =
+                rankingData[index];
 
             if (!usuario) return;
 
-            const confirmar = confirm(
-                `Tem certeza que deseja remover o usuário "${usuario.nome}"?`
-            );
+
+            // =========================
+            // CONFIRMAÇÃO
+            // =========================
+
+            const confirmar =
+                confirm(
+                    `Tem certeza que deseja remover o usuário "${usuario.nome}"?`
+                );
 
             if (!confirmar) return;
 
-            rankingData.splice(index, 1);
 
-            renderizarUsuarios();
+            // =========================
+            // CRIAR NOVO RANKING
+            // =========================
+
+            const novoRanking =
+                rankingData.filter(
+                    (_, itemIndex) =>
+                        itemIndex !== index
+                );
+
+
+            // =========================
+            // SESSÃO
+            // =========================
+
+            const session =
+                sessionStorage.getItem(
+                    "vought_session"
+                );
+
+
+            if (!session) {
+
+                alert(
+                    "Sessão inválida. Faça login novamente."
+                );
+
+                window.location.href =
+                    "login.html";
+
+                return;
+            }
+
+
+            // =========================
+            // ENVIAR PARA API
+            // =========================
+
+            try {
+
+                const response =
+                    await fetch(
+                        "https://vought-arcade-api.vought-art-api.workers.dev/api/ranking",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json",
+
+                                "Authorization":
+                                    `Bearer ${session}`
+                            },
+
+                            body:
+                                JSON.stringify(
+                                    novoRanking
+                                )
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                // =========================
+                // ERRO DE AUTENTICAÇÃO
+                // =========================
+
+                if (!response.ok) {
+
+                    if (
+                        response.status === 401
+                    ) {
+
+                        sessionStorage.removeItem(
+                            "vought_session"
+                        );
+
+                        alert(
+                            "Sua sessão expirou. Faça login novamente."
+                        );
+
+                        window.location.href =
+                            "login.html";
+
+                        return;
+                    }
+
+
+                    console.error(
+                        "Erro ao remover usuário:",
+                        data
+                    );
+
+                    alert(
+                        "Não foi possível remover o usuário."
+                    );
+
+                    return;
+                }
+
+
+                // =========================
+                // ATUALIZAR RANKING LOCAL
+                // =========================
+
+                rankingData =
+                    novoRanking;
+
+                renderizarUsuarios();
+
+
+                // =========================
+                // LOG
+                // =========================
+
+                registrarAcao(
+                    `USUÁRIO REMOVIDO — ${usuario.nome}`
+                );
+
+
+                alert(
+                    `Usuário "${usuario.nome}" removido com sucesso!`
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Erro ao conectar com a API:",
+                    error
+                );
+
+                alert(
+                    "Não foi possível conectar ao servidor."
+                );
+
+            }
+
         });
+
     });
 }
 
