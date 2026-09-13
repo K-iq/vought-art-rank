@@ -1,9 +1,5 @@
 [
     {
-        "nome": "BIG",
-        "pontos": 45251
-    },
-    {
         "nome": "REBECCA",
         "pontos": 1080
     },
@@ -14,6 +10,10 @@
     {
         "nome": "MITTZ",
         "pontos": 820
+    },
+    {
+        "nome": "BIG",
+        "pontos": 0
     },
     {
         "nome": "SCYNTROS",
