@@ -764,41 +764,187 @@ carregarDesafio();
 const saveChallengeButton = document.querySelector("#save-challenge-button");
 
 if (saveChallengeButton) {
-    saveChallengeButton.addEventListener("click", () => {
-        const titleInput = document.querySelector("#challenge-title");
-        const descriptionInput = document.querySelector("#challenge-description");
-        const rewardInput = document.querySelector("#challenge-reward");
 
-        const titulo = titleInput.value.trim();
-        const descricao = descriptionInput.value.trim();
-        const recompensa = Number(rewardInput.value);
+    saveChallengeButton.addEventListener("click", async () => {
+
+        const titleInput =
+            document.querySelector("#challenge-title");
+
+        const descriptionInput =
+            document.querySelector("#challenge-description");
+
+        const rewardInput =
+            document.querySelector("#challenge-reward");
+
+
+        const titulo =
+            titleInput.value.trim();
+
+        const descricao =
+            descriptionInput.value.trim();
+
+        const recompensa =
+            Number(rewardInput.value);
+
+
+        // =========================
+        // VALIDAÇÕES
+        // =========================
 
         if (titulo === "") {
+
             alert("O título do desafio não pode estar vazio.");
+
             titleInput.focus();
+
             return;
         }
+
 
         if (descricao === "") {
+
             alert("A descrição do desafio não pode estar vazia.");
+
             descriptionInput.focus();
+
             return;
         }
+
 
         if (!Number.isInteger(recompensa) || recompensa < 0) {
+
             alert("A recompensa precisa ser um número inteiro válido.");
+
             rewardInput.focus();
+
             return;
         }
 
-        challengeData = {
+
+        // =========================
+        // DADOS DO DESAFIO
+        // =========================
+
+        const novoDesafio = {
+
             titulo: titulo,
+
             descricao: descricao,
+
             recompensa: recompensa
+
         };
 
-        alert("Desafio atualizado com sucesso!");
+
+        // =========================
+        // SESSÃO
+        // =========================
+
+        const session =
+            sessionStorage.getItem("vought_session");
+
+
+        if (!session) {
+
+            alert("Sessão inválida. Faça login novamente.");
+
+            window.location.href = "login.html";
+
+            return;
+        }
+
+
+        // =========================
+        // SALVAR NA API
+        // =========================
+
+        try {
+
+            const response = await fetch(
+                "https://vought-arcade-api.vought-art-api.workers.dev/api/challenge",
+                {
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        "Authorization":
+                            `Bearer ${session}`
+
+                    },
+
+                    body: JSON.stringify(novoDesafio)
+
+                }
+            );
+
+
+            const data =
+                await response.json();
+
+
+            if (!response.ok) {
+
+                if (response.status === 401) {
+
+                    sessionStorage.removeItem(
+                        "vought_session"
+                    );
+
+                    alert(
+                        "Sua sessão expirou. Faça login novamente."
+                    );
+
+                    window.location.href =
+                        "login.html";
+
+                    return;
+                }
+
+
+                console.error(
+                    "Erro ao salvar desafio:",
+                    data
+                );
+
+                alert(
+                    "Não foi possível salvar o desafio."
+                );
+
+                return;
+            }
+
+
+            // =========================
+            // ATUALIZAR MEMÓRIA LOCAL
+            // =========================
+
+            challengeData =
+                novoDesafio;
+
+
+            alert(
+                "Desafio atualizado com sucesso!"
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "Erro ao conectar com a API:",
+                error
+            );
+
+            alert(
+                "Não foi possível conectar ao servidor."
+            );
+
+        }
+
     });
+
 }
 
 
