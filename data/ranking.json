@@ -1,15 +1,15 @@
 [
     {
-        "nome": "REBECCA",
-        "pontos": 1080
-    },
-    {
         "nome": "LUCKY",
         "pontos": 950
     },
     {
         "nome": "MITTZ",
         "pontos": 820
+    },
+    {
+        "nome": "REBECCA",
+        "pontos": 0
     },
     {
         "nome": "BIG",
