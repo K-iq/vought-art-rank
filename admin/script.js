@@ -1,962 +1,45 @@
-const isAdminPage =
-    window.location.pathname.endsWith("/admin/index.html");
+// =========================================
+// VOUGHT ART ARCADE
+// Ranking System
+// =========================================
 
-if (isAdminPage) {
 
-    const session =
-        sessionStorage.getItem("vought_session");
-
-    if (!session) {
-        window.location.href = "login.html";
-    } else {
-
-        fetch(
-            "https://vought-arcade-api.vought-art-api.workers.dev/api/auth/me",
-            {
-                method: "GET",
-
-                headers: {
-                    "Authorization": `Bearer ${session}`
-                }
-            }
-        )
-        .then(async (response) => {
-
-            if (!response.ok) {
-                throw new Error("Unauthorized");
-            }
-
-            return response.json();
-        })
-        .then((data) => {
-
-            console.log(
-                "Authenticated as:",
-                data.login,
-                "Role:",
-                data.role
-            );
-
-        })
-        .catch(() => {
-
-            sessionStorage.removeItem("vought_session");
-
-            window.location.href = "login.html";
-        });
-    }
-}
-
-
-// ---------- ADMIN LOGIN ----------
-
-const loginForm = document.querySelector(".login-form");
-
-if (loginForm) {
-
-    loginForm.addEventListener("submit", async (event) => {
-
-        event.preventDefault();
-
-        const login =
-            document.querySelector("#login").value.trim();
-
-        const password =
-            document.querySelector("#password").value;
-
-        if (login === "" || password === "") {
-            alert("PREENCHA LOGIN E SENHA.");
-            return;
-        }
-
-        try {
-
-            const response = await fetch(
-                "https://vought-arcade-api.vought-art-api.workers.dev/api/auth/login",
-                {
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-
-                    body: JSON.stringify({
-                        login: login,
-                        password: password
-                    })
-                }
-            );
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                alert("INVALID LOGIN OR PASSWORD");
-                return;
-            }
-
-            if (!data.success || !data.session) {
-                alert("AUTHENTICATION ERROR");
-                return;
-            }
-
-            sessionStorage.setItem(
-                "vought_session",
-                data.session
-            );
-
-            window.location.href = "index.html";
-
-        } catch (error) {
-
-            console.error(error);
-
-            alert("UNABLE TO CONNECT TO AUTHENTICATION SERVER.");
-        }
-    });
-}
-
-
-
-// ---------- ADMIN NAVIGATION ----------
-
-const navButtons = document.querySelectorAll(".nav-button");
-const adminSections = document.querySelectorAll(".admin-section");
-
-if (navButtons.length > 0) {
-
-    navButtons.forEach((button) => {
-
-        button.addEventListener("click", () => {
-
-            const sectionName = button.dataset.section;
-
-
-            // Remove o estado ativo dos botões
-
-            navButtons.forEach((btn) => {
-
-                btn.classList.remove("active");
-
-            });
-
-
-            // Esconde todas as seções
-
-            adminSections.forEach((section) => {
-
-                section.classList.remove("active");
-
-            });
-
-
-            // Ativa o botão clicado
-
-            button.classList.add("active");
-
-
-            // Mostra a seção correspondente
-
-            const targetSection =
-                document.querySelector(`#section-${sectionName}`);
-
-            if (targetSection) {
-
-                targetSection.classList.add("active");
-
-            }
-
-        });
-
-    });
-
-}
-
-// ---------- ADICIONAR ADMIN ----------
-
-const addAdminButton =
-    document.querySelector("#add-admin-button");
-
-const addAdminModal =
-    document.querySelector("#add-admin-modal");
-
-const addAdminClose =
-    document.querySelector("#add-admin-close");
-
-const addAdminCancel =
-    document.querySelector("#add-admin-cancel");
-
-const addAdminForm =
-    document.querySelector("#add-admin-form");
-
-const addAdminLogin =
-    document.querySelector("#add-admin-login");
-
-const addAdminName =
-    document.querySelector("#add-admin-name");
-
-const addAdminPassword =
-    document.querySelector("#add-admin-password");
-
-
-// ABRIR MODAL
-
-if (addAdminButton) {
-
-    addAdminButton.addEventListener("click", () => {
-
-        addAdminModal.style.display = "flex";
-
-        addAdminLogin.focus();
-
-    });
-
-}
-
-
-// FECHAR MODAL
-
-function fecharModalAddAdmin() {
-
-    if (!addAdminModal) return;
-
-    addAdminModal.style.display = "none";
-
-    addAdminForm.reset();
-
-}
-
-
-// BOTÃO X
-
-if (addAdminClose) {
-
-    addAdminClose.addEventListener(
-        "click",
-        fecharModalAddAdmin
-    );
-
-}
-
-
-// BOTÃO CANCELAR
-
-if (addAdminCancel) {
-
-    addAdminCancel.addEventListener(
-        "click",
-        fecharModalAddAdmin
-    );
-
-}
-
-
-// ADICIONAR ADMIN
-
-if (addAdminForm) {
-
-    addAdminForm.addEventListener("submit", (event) => {
-
-        event.preventDefault();
-
-
-        const login =
-            addAdminLogin.value.trim();
-
-        const nome =
-            addAdminName.value.trim();
-
-        const senha =
-            addAdminPassword.value;
-
-
-        if (login === "") {
-
-            alert("O login não pode estar vazio.");
-
-            addAdminLogin.focus();
-
-            return;
-
-        }
-
-
-        if (nome === "") {
-
-            alert("O nome não pode estar vazio.");
-
-            addAdminName.focus();
-
-            return;
-
-        }
-
-
-        if (senha === "") {
-
-            alert("A senha não pode estar vazia.");
-
-            addAdminPassword.focus();
-
-            return;
-
-        }
-
-
-        const loginExiste =
-            adminsData.some((admin) => {
-
-                return admin.login.toLowerCase() ===
-                    login.toLowerCase();
-
-            });
-
-
-        if (loginExiste) {
-
-            alert("Já existe um administrador com esse login.");
-
-            addAdminLogin.focus();
-
-            return;
-
-        }
-
-
-        adminsData.push({
-
-            login: login,
-
-            nome: nome,
-
-            senha: senha,
-			
-			role: "admin"
-
-        });
-		
-		registrarAcao(`ADMIN ADICIONADO — ${login}`);
-
-
-        renderizarAdmins();
-
-        fecharModalAddAdmin();
-
-
-        alert("Administrador adicionado com sucesso!");
-
-    });
-
-}
-
-// ---------- EDITAR ADMIN ----------
-
-const editAdminModal =
-    document.querySelector("#edit-admin-modal");
-
-const editAdminClose =
-    document.querySelector("#edit-admin-close");
-
-const editAdminCancel =
-    document.querySelector("#edit-admin-cancel");
-
-const editAdminForm =
-    document.querySelector("#edit-admin-form");
-
-const editAdminLogin =
-    document.querySelector("#edit-admin-login");
-
-const editAdminName =
-    document.querySelector("#edit-admin-name");
-
-const editAdminPassword =
-    document.querySelector("#edit-admin-password");
-
-let adminEditando = null;
-
-
-// ABRIR MODAL
-
-function abrirModalEdicaoAdmin(index) {
-
-    if (!editAdminModal) return;
-
-    const admin = adminsData[index];
-
-    if (!admin) return;
-
-    adminEditando = index;
-
-    editAdminLogin.value = admin.login;
-
-    editAdminName.value = admin.nome;
-
-    editAdminPassword.value = "";
-
-    editAdminModal.style.display = "flex";
-
-    editAdminLogin.focus();
-}
-
-
-// FECHAR MODAL
-
-function fecharModalEdicaoAdmin() {
-
-    if (!editAdminModal) return;
-
-    editAdminModal.style.display = "none";
-
-    editAdminForm.reset();
-
-    adminEditando = null;
-}
-
-
-// BOTÃO X
-
-if (editAdminClose) {
-
-    editAdminClose.addEventListener(
-        "click",
-        fecharModalEdicaoAdmin
-    );
-
-}
-
-
-// BOTÃO CANCELAR
-
-if (editAdminCancel) {
-
-    editAdminCancel.addEventListener(
-        "click",
-        fecharModalEdicaoAdmin
-    );
-
-}
-
-
-// BOTÕES EDITAR
-
-function configurarBotoesEditarAdmin() {
-
-    const editButtons =
-        document.querySelectorAll(".admin-edit-button");
-
-    editButtons.forEach((button) => {
-
-        button.addEventListener("click", () => {
-			const index = Number(button.dataset.index);
-			const admin = adminsData[index];
-
-			if (!admin) return;
-
-			if (admin.role === "owner") {
-				alert("O Owner não pode ser editado.");
-				return;
-			}
-
-			abrirModalEdicaoAdmin(index);
-		});
-
-    });
-
-}
-
-
-// SALVAR ALTERAÇÕES
-
-if (editAdminForm) {
-
-    editAdminForm.addEventListener("submit", (event) => {
-
-        event.preventDefault();
-
-        if (adminEditando === null) return;
-
-
-        const login =
-            editAdminLogin.value.trim();
-
-        const nome =
-            editAdminName.value.trim();
-
-        const senha =
-            editAdminPassword.value;
-
-
-        if (login === "") {
-
-            alert("O login não pode estar vazio.");
-
-            editAdminLogin.focus();
-
-            return;
-
-        }
-
-
-        if (nome === "") {
-
-            alert("O nome não pode estar vazio.");
-
-            editAdminName.focus();
-
-            return;
-
-        }
-
-
-        if (
-            senha !== "" &&
-            senha.length < 4
-        ) {
-
-            alert(
-                "A nova senha precisa ter pelo menos 4 caracteres."
-            );
-
-            editAdminPassword.focus();
-
-            return;
-
-        }
-
-
-        const loginExiste =
-            adminsData.some((admin, index) => {
-
-                if (index === adminEditando) {
-                    return false;
-                }
-
-                return (
-                    admin.login.toLowerCase() ===
-                    login.toLowerCase()
-                );
-
-            });
-
-
-        if (loginExiste) {
-
-            alert(
-                "Já existe um administrador com esse login."
-            );
-
-            editAdminLogin.focus();
-
-            return;
-
-        }
-
-
-        adminsData[adminEditando].login =
-            login;
-
-        adminsData[adminEditando].nome =
-            nome;
-
-
-        if (senha !== "") {
-
-            adminsData[adminEditando].senha =
-                senha;
-
-        }
-
-		registrarAcao(`ADMIN EDITADO — ${login}`);
-		
-        renderizarAdmins();
-
-        fecharModalEdicaoAdmin();
-
-
-        alert(
-            "Administrador atualizado com sucesso!"
-        );
-
-    });
-
-}
-
-// ---------- REMOVER ADMIN ----------
-
-function configurarBotoesRemoverAdmin() {
-
-    const removeButtons =
-        document.querySelectorAll(".admin-remove-button");
-
-    removeButtons.forEach((button) => {
-
-        button.addEventListener("click", () => {
-
-            const index =
-                Number(button.dataset.index);
-
-            const admin =
-                adminsData[index];
-
-            if (!admin) return;
-			
-			if (admin.role === "owner") {
-				alert("O Owner não pode ser removido.");
-				return;
-			}
-
-
-            // NÃO PERMITIR REMOVER O ÚLTIMO ADMIN
-
-            if (adminsData.length <= 1) {
-
-                alert(
-                    "O sistema precisa ter pelo menos um administrador."
-                );
-
-                return;
-
-            }
-
-
-            const confirmar =
-                confirm(
-                    `Tem certeza que deseja remover o administrador "${admin.nome}"?`
-                );
-
-
-            if (!confirmar) return;
-			
-			registrarAcao(`ADMIN REMOVIDO — ${admin.login}`);
-
-
-            adminsData.splice(index, 1);
-
-
-            renderizarAdmins();
-
-
-            alert(
-                "Administrador removido com sucesso!"
-            );
-
-        });
-
-    });
-
-}
-
-
-
-
-//--------VARIAVEIS LOCAIS----------
-
+// Local onde o ranking será exibido
+const scoreboard = document.getElementById("scoreboard");
 let sistemaLevels;
 
-let adminsData = [
-    {
-        login: "admin",
-        nome: "Administrador",
-		role: "owner"
+// =========================================
+// SISTEMA DE LEVEL
+// =========================================
+
+function calcularXPDoNivel(level) {
+    const base = sistemaLevels.baseXP;
+    const limite = 1000;
+
+    // Crescimento inicial rápido
+    if (level <= 6) {
+        return Math.floor(
+            base * Math.pow(sistemaLevels.multiplicador, level - 1)
+        );
     }
-];
 
-let adminLog = [];
+    // A partir daqui, o crescimento começa a desacelerar
+    const xpAnterior = calcularXPDoNivel(level - 1);
+    const crescimento = (limite - xpAnterior) * 0.45;
 
-
-
-// ---------- LOAD RANKING ----------
-
-const usersTableBody = document.querySelector("#users-table-body");
-
-let rankingData = [];
-
-if (usersTableBody) {
-
-    Promise.all([
-        fetch("../data/ranking.json"),
-        fetch("../data/levels.json")
-    ])
-
-        .then(async ([rankingResponse, levelsResponse]) => {
-
-            if (!rankingResponse.ok) {
-                throw new Error("Não foi possível carregar o ranking.");
-            }
-
-            if (!levelsResponse.ok) {
-                throw new Error("Não foi possível carregar o sistema de níveis.");
-            }
-
-            const ranking = await rankingResponse.json();
-            sistemaLevels = await levelsResponse.json();
-
-            return ranking;
-
-        })
-
-        .then((ranking) => {
-
-            rankingData = ranking;
-
-            // Ordena do maior para o menor XP
-            rankingData.sort((a, b) => b.pontos - a.pontos);
-
-            renderizarUsuarios();
-
-        })
-
-        .catch((error) => {
-
-            console.error(error);
-
-            usersTableBody.innerHTML = `
-                <tr>
-                    <td
-                        colspan="5"
-                        class="users-empty"
-                    >
-                        ERRO AO CARREGAR RANKING
-                    </td>
-                </tr>
-            `;
-
-        });
-
+    return Math.min(
+        limite,
+        Math.round(xpAnterior + crescimento)
+    );
 }
 
-// ---------- LOAD CHALLENGE ----------
-
-let challengeData = null;
-
-async function carregarDesafio() {
-    try {
-        const response = await fetch("../data/challenge.json");
-
-        if (!response.ok) {
-            throw new Error("Não foi possível carregar o desafio.");
-        }
-
-        challengeData = await response.json();
-
-        const titleInput = document.querySelector("#challenge-title");
-        const descriptionInput = document.querySelector("#challenge-description");
-        const rewardInput = document.querySelector("#challenge-reward");
-
-        if (titleInput) {
-            titleInput.value = challengeData.titulo || "";
-        }
-
-        if (descriptionInput) {
-            descriptionInput.value = challengeData.descricao || "";
-        }
-
-        if (rewardInput) {
-            rewardInput.value = challengeData.recompensa ?? 0;
-        }
-
-    } catch (error) {
-        console.error("Erro ao carregar desafio:", error);
-    }
-}
-
-carregarDesafio();
-
-const saveChallengeButton = document.querySelector("#save-challenge-button");
-
-if (saveChallengeButton) {
-
-    saveChallengeButton.addEventListener("click", async () => {
-
-        const titleInput =
-            document.querySelector("#challenge-title");
-
-        const descriptionInput =
-            document.querySelector("#challenge-description");
-
-        const rewardInput =
-            document.querySelector("#challenge-reward");
-
-
-        const titulo =
-            titleInput.value.trim();
-
-        const descricao =
-            descriptionInput.value.trim();
-
-        const recompensa =
-            Number(rewardInput.value);
-
-
-        // =========================
-        // VALIDAÇÕES
-        // =========================
-
-        if (titulo === "") {
-
-            alert("O título do desafio não pode estar vazio.");
-
-            titleInput.focus();
-
-            return;
-        }
-
-
-        if (descricao === "") {
-
-            alert("A descrição do desafio não pode estar vazia.");
-
-            descriptionInput.focus();
-
-            return;
-        }
-
-
-        if (!Number.isInteger(recompensa) || recompensa < 0) {
-
-            alert("A recompensa precisa ser um número inteiro válido.");
-
-            rewardInput.focus();
-
-            return;
-        }
-
-
-        // =========================
-        // DADOS DO DESAFIO
-        // =========================
-
-        const novoDesafio = {
-
-            titulo: titulo,
-
-            descricao: descricao,
-
-            recompensa: recompensa
-
-        };
-
-
-        // =========================
-        // SESSÃO
-        // =========================
-
-        const session =
-            sessionStorage.getItem("vought_session");
-
-
-        if (!session) {
-
-            alert("Sessão inválida. Faça login novamente.");
-
-            window.location.href = "login.html";
-
-            return;
-        }
-
-
-        // =========================
-        // SALVAR NA API
-        // =========================
-
-        try {
-
-            const response = await fetch(
-                "https://vought-arcade-api.vought-art-api.workers.dev/api/challenge",
-                {
-                    method: "POST",
-
-                    headers: {
-
-                        "Content-Type":
-                            "application/json",
-
-                        "Authorization":
-                            `Bearer ${session}`
-
-                    },
-
-                    body: JSON.stringify(novoDesafio)
-
-                }
-            );
-
-
-            const data =
-                await response.json();
-
-
-            if (!response.ok) {
-
-                if (response.status === 401) {
-
-                    sessionStorage.removeItem(
-                        "vought_session"
-                    );
-
-                    alert(
-                        "Sua sessão expirou. Faça login novamente."
-                    );
-
-                    window.location.href =
-                        "login.html";
-
-                    return;
-                }
-
-
-                console.error(
-                    "Erro ao salvar desafio:",
-                    data
-                );
-
-                alert(
-                    "Não foi possível salvar o desafio."
-                );
-
-                return;
-            }
-
-
-            // =========================
-            // ATUALIZAR MEMÓRIA LOCAL
-            // =========================
-
-            challengeData =
-                novoDesafio;
-
-
-            alert(
-                "Desafio atualizado com sucesso!"
-            );
-
-
-        } catch (error) {
-
-            console.error(
-                "Erro ao conectar com a API:",
-                error
-            );
-
-            alert(
-                "Não foi possível conectar ao servidor."
-            );
-
-        }
-
-    });
-
-}
-
-
-// ---------- CALCULAR LEVEL ----------
 
 function calcularLevel(pontos) {
-
     let level = 1;
     let xpRestante = pontos;
 
+    // Calcula normalmente até a curva estabilizar
     while (level < 15) {
-
         const xpNecessario = calcularXPDoNivel(level);
 
         if (xpRestante < xpNecessario) {
@@ -964,751 +47,599 @@ function calcularLevel(pontos) {
         }
 
         xpRestante -= xpNecessario;
-
         level++;
-
     }
 
-
-    // Depois da estabilização,
-    // cada level custa 1000 XP
-
+    // Depois da estabilização, cada level custa 1000 XP
     if (xpRestante >= 1000) {
-
         level += Math.floor(xpRestante / 1000);
-
     }
-
 
     return level;
-
 }
 
 
-// ---------- XP NECESSÁRIO PARA O LEVEL ----------
+// =========================================
+// CALCULAR PROGRESSO DO LEVEL
+// =========================================
 
-function calcularXPDoNivel(level) {
+function calcularProgressoXP(pontos) {
+    let level = 1;
+    let xpRestante = pontos;
 
-    const base = sistemaLevels.baseXP;
-    const limite = 1000;
+    // Calcula normalmente até a curva estabilizar
+    while (level < 15) {
+        const xpNecessario = calcularXPDoNivel(level);
 
-    if (level <= 6) {
-
-        return Math.floor(
-            base *
-            Math.pow(
-                sistemaLevels.multiplicador,
-                level - 1
-            )
-        );
-
-    }
-
-
-    const xpAnterior =
-        calcularXPDoNivel(level - 1);
-
-    const crescimento =
-        (limite - xpAnterior) * 0.45;
-
-
-    return Math.min(
-        limite,
-        Math.round(
-            xpAnterior + crescimento
-        )
-    );
-
-}
-
-		//---------ATUALIZAR DASHBOARD-----------------/
-
-function atualizarDashboard() {
-    const dashboardUsers = document.querySelector("#dashboard-users");
-    const dashboardTopPlayer = document.querySelector("#dashboard-top-player");
-    const dashboardTotalXp = document.querySelector("#dashboard-total-xp");
-    const dashboardChallenge = document.querySelector("#dashboard-challenge");
-
-    if (dashboardUsers) {
-        dashboardUsers.textContent = rankingData.length;
-    }
-
-    if (dashboardTopPlayer) {
-        if (rankingData.length > 0) {
-            dashboardTopPlayer.textContent = rankingData[0].nome;
-        } else {
-            dashboardTopPlayer.textContent = "---";
+        if (xpRestante < xpNecessario) {
+            break;
         }
+
+        xpRestante -= xpNecessario;
+        level++;
     }
 
-    if (dashboardTotalXp) {
-        const totalXp = rankingData.reduce((total, usuario) => {
-            return total + usuario.pontos;
-        }, 0);
+    let xpNecessario;
 
-        dashboardTotalXp.textContent = totalXp.toLocaleString("pt-BR");
+    if (level >= 15) {
+        xpNecessario = 1000;
+
+        // Avança vários levels de uma vez
+        const levelsExtras = Math.floor(xpRestante / xpNecessario);
+
+        level += levelsExtras;
+        xpRestante -= levelsExtras * xpNecessario;
+    } else {
+        xpNecessario = calcularXPDoNivel(level);
     }
 
-    if (dashboardChallenge) {
-        dashboardChallenge.textContent = "ATIVO";
-    }
+    const porcentagem = (xpRestante / xpNecessario) * 100;
+
+    return {
+        level: level,
+        xpAtual: xpRestante,
+        xpNecessario: xpNecessario,
+        porcentagem: porcentagem
+    };
 }
 
-		//---------------DASHLOG---------------
+// =========================================
+// OBTER TÍTULOS DESBLOQUEADOS
+// =========================================
 
-function renderizarAdminLog() {
-    const adminLogList = document.querySelector("#admin-log-list");
+function obterTitulosDesbloqueados(level) {
 
-    if (!adminLogList) return;
+    return sistemaLevels.titulos.filter((item) => {
+        return level >= item.level;
+    });
 
-    adminLogList.innerHTML = "";
+}
 
-    if (adminLog.length === 0) {
-        adminLogList.innerHTML = `
-            <div class="admin-log-item">
-                NENHUMA AÇÃO REGISTRADA.
+
+// Carrega os dados do ranking
+async function carregarRanking() {
+
+    try {
+
+        const respostaRanking = await fetch("data/ranking.json");
+		const jogadores = await respostaRanking.json();
+
+		const respostaLevels = await fetch("data/levels.json");
+		sistemaLevels = await respostaLevels.json();
+		
+		// =========================================
+		// SISTEMA DE LEVEL
+		// =========================================
+
+
+		function obterTitulo(level) {
+			let tituloAtual = sistemaLevels.titulos[0].titulo;
+
+			sistemaLevels.titulos.forEach((item) => {
+				if (level >= item.level) {
+					tituloAtual = item.titulo;
+				}
+			});
+
+			return tituloAtual;
+		}
+		
+		console.log(jogadores);
+
+
+        // Ordena do maior para o menor número de pontos
+        jogadores.sort((a, b) => b.pontos - a.pontos);
+
+
+        // Limpa o ranking atual
+        scoreboard.innerHTML = "";
+		
+		// Cabeçalho do ranking
+		const header = document.createElement("div");
+
+		header.classList.add("score-header");
+
+		header.innerHTML = `
+			<span>RANK</span>
+			<span>PLAYER</span>
+			<span>LEVEL</span>
+			<span>XP</span>
+		`;
+
+		scoreboard.appendChild(header);
+
+
+        // Cria cada jogador
+        jogadores.forEach((jogador, index) => {
+
+            const posicao = index + 1;
+
+            const score = document.createElement("div");
+
+            score.classList.add("score");
+			
+			score.style.cursor = "pointer";
+
+			score.addEventListener("click", () => {
+				abrirPerfil(jogador, posicao);
+			});
+
+
+            // Classes especiais para o Top 3
+            if (posicao === 1) {
+                score.classList.add("first");
+            }
+
+            else if (posicao === 2) {
+                score.classList.add("second");
+            }
+
+            else if (posicao === 3) {
+                score.classList.add("third");
+            }
+
+
+            // Posição
+            const position = document.createElement("span");
+
+            position.classList.add("position");
+
+            position.textContent = `${posicao}TH`;
+
+
+            // Corrige 1ST, 2ND e 3RD
+            if (posicao === 1) {
+                position.textContent = "1ST";
+            }
+
+            else if (posicao === 2) {
+                position.textContent = "2ND";
+            }
+
+            else if (posicao === 3) {
+                position.textContent = "3RD";
+            }
+
+
+            // Nome
+			const name = document.createElement("span");
+
+			name.classList.add("name");
+
+			name.textContent = jogador.nome;
+
+
+			// Level
+			const level = document.createElement("span");
+			level.classList.add("level");
+
+			const levelAtual = calcularLevel(jogador.pontos);
+
+			level.textContent = `LV. ${levelAtual}`;
+
+
+			// Pontuação
+			const xp = document.createElement("span");
+
+			xp.classList.add("xp");
+
+			xp.textContent = "0 XP";
+
+
+			// Anima o contador até a pontuação real
+			let valorAtual = 0;
+
+			const valorFinal = jogador.pontos;
+
+			const duracao = 2000;
+
+			const inicio = performance.now();
+
+
+			function animarXP(tempo) {
+
+				const progresso = Math.min((tempo - inicio) / duracao, 1);
+
+			// Suaviza a animação
+				const suavizado = 1 - Math.pow(1 - progresso, 3);
+
+				valorAtual = Math.floor(valorFinal * suavizado);
+
+				xp.textContent = `${valorAtual} XP`;
+
+
+				if (progresso < 1) {
+
+					requestAnimationFrame(animarXP);
+
+				}
+
+				else {	
+
+					xp.textContent = `${valorFinal} XP`;
+
+				}
+
+			}
+
+
+            // Monta a linha
+            score.appendChild(position);
+
+			score.appendChild(name);
+
+			score.appendChild(level);
+
+			score.appendChild(xp);
+			
+			setTimeout(() => {
+
+				animarXP(performance.now());
+
+			}, posicao * 150 + 450);
+
+
+            // Coloca no placar
+            scoreboard.appendChild(score);
+
+        });
+
+    }
+
+    catch (erro) {
+
+        console.error("Erro ao carregar o ranking:", erro);
+
+        scoreboard.innerHTML = `
+            <div class="ranking-error">
+                ERROR: RANKING DATA UNAVAILABLE
             </div>
         `;
+
+    }
+
+}
+
+// =========================================
+// ABRIR PERFIL DO JOGADOR
+// =========================================
+
+function abrirPerfil(jogador, posicao) {
+
+    const overlay = document.getElementById("profile-overlay");
+
+    const nome = document.getElementById("profile-name");
+    const rank = document.getElementById("profile-rank");
+    const level = document.getElementById("profile-level");
+    const xp = document.getElementById("profile-xp");
+	const xpFill = document.getElementById("profile-xp-fill");
+	const xpProgress = document.getElementById("profile-xp-progress");
+	const profileImage = document.getElementById("profile-image");
+	const titleList = document.getElementById("profile-title-list");
+
+    const levelAtual = calcularLevel(jogador.pontos);
+	const progressoXP = calcularProgressoXP(jogador.pontos);
+	const titulosDesbloqueados = obterTitulosDesbloqueados(levelAtual);
+	
+	profileImage.src = `assets/profile/${jogador.nome}.png`;
+
+	profileImage.onerror = () => {
+		profileImage.src = "assets/profile/default.png";
+	};
+
+    nome.textContent = jogador.nome;
+    rank.textContent = `RANK #${posicao}`;
+    level.textContent = `LV. ${levelAtual}`;
+    xp.textContent = `${jogador.pontos} XP`;
+	xpFill.style.width = `${progressoXP.porcentagem}%`;
+	xpProgress.textContent = `${progressoXP.xpAtual} / ${progressoXP.xpNecessario} XP`;
+	titleList.innerHTML = "";
+
+titulosDesbloqueados.forEach((item) => {
+
+    const title = document.createElement("div");
+
+    title.classList.add("profile-title");
+	
+	title.classList.add(`title-level-${item.level}`);
+
+    title.textContent = item.titulo;
+
+    titleList.appendChild(title);
+
+});
+
+    overlay.style.opacity = "1";
+    overlay.style.visibility = "visible";
+}
+
+// =========================================
+// WEEKLY CHALLENGE
+// =========================================
+
+async function abrirDesafioSemanal() {
+    const overlay = document.getElementById("challenge-overlay");
+
+    const titulo = document.getElementById("challenge-title");
+    const descricao = document.getElementById("challenge-description");
+    const recompensa = document.getElementById("challenge-reward");
+
+    try {
+        const resposta = await fetch("data/challenge.json");
+        const desafio = await resposta.json();
+
+        titulo.textContent = desafio.titulo;
+        descricao.textContent = desafio.descricao;
+        recompensa.textContent = `${desafio.recompensa} XP`;
+
+        overlay.style.opacity = "1";
+        overlay.style.visibility = "visible";
+
+    } catch (erro) {
+        console.error("Erro ao carregar desafio:", erro);
+
+        titulo.textContent = "ERROR";
+        descricao.textContent = "WEEKLY CHALLENGE DATA UNAVAILABLE";
+        recompensa.textContent = "---";
+
+        overlay.style.opacity = "1";
+        overlay.style.visibility = "visible";
+    }
+}
+
+
+// ABRIR DESAFIO
+const challengeButton = document.getElementById("challenge-toggle");
+
+challengeButton.addEventListener("click", () => {
+    abrirDesafioSemanal();
+});
+
+
+// FECHAR DESAFIO
+const challengeClose = document.getElementById("challenge-close");
+const challengeOverlay = document.getElementById("challenge-overlay");
+
+challengeClose.addEventListener("click", () => {
+    challengeOverlay.style.opacity = "0";
+    challengeOverlay.style.visibility = "hidden";
+});
+
+// =========================================
+// FECHAR PERFIL
+// =========================================
+
+const profileClose = document.getElementById("profile-close");
+const profileOverlay = document.getElementById("profile-overlay");
+
+profileClose.addEventListener("click", () => {
+    profileOverlay.style.opacity = "0";
+    profileOverlay.style.visibility = "hidden";
+});
+
+
+
+// Inicializa o ranking
+carregarRanking();
+
+// =========================================
+// CONTROLE DE MÚSICA
+// =========================================
+
+const music = document.getElementById("arcade-music");
+const musicButton = document.getElementById("music-toggle");
+
+
+// Volume da música
+music.volume = 0.25;
+
+
+// Botão ON / OFF
+musicButton.addEventListener("click", async () => {
+
+    if (music.paused) {
+
+        try {
+
+            await music.play();
+
+            musicButton.textContent = "♪ MUSIC: ON";
+
+        }
+
+        catch (erro) {
+
+            console.error("Erro ao iniciar música:", erro);
+
+        }
+
+    }
+
+    else {
+
+        music.pause();
+
+        musicButton.textContent = "♪ MUSIC: OFF";
+
+    }
+
+});
+
+// =========================================
+// EFEITO SONORO DE CLIQUE
+// =========================================
+
+const clickSound = document.getElementById("click-sound");
+
+clickSound.volume = 0.1;
+
+document.addEventListener("click", () => {
+    clickSound.currentTime = 0;
+    clickSound.play();
+});
+
+// =========================================
+// PARTICLES
+// =========================================
+
+const particlesContainer = document.getElementById("particles");
+
+function criarParticula() {
+    const particle = document.createElement("div");
+    particle.classList.add("particle");
+
+    // Posição aleatória na tela
+    particle.style.left = `${Math.random() * 100}%`;
+    particle.style.top = `${Math.random() * 100}%`;
+
+    particlesContainer.appendChild(particle);
+
+    // Remove depois de um tempo
+    setTimeout(() => {
+        particle.remove();
+    }, 2000);
+}
+
+// Cria uma nova partícula a cada 300ms
+setInterval(criarParticula, 200);
+
+// ---------- ELASTIC OVERSCROLL ----------
+
+const arcadeScreen = document.querySelector(".arcade-screen");
+
+const MAX_OVERSCROLL = 50;
+const RESISTANCE = 40;
+
+let overscrollOffset = 0;
+let overscrollActive = false;
+
+function calcularElastic(raw) {
+    const sinal = Math.sign(raw);
+    const distancia = Math.abs(raw);
+
+    const resistencia =
+        MAX_OVERSCROLL *
+        (1 - Math.exp(-distancia / RESISTANCE));
+
+    return sinal * resistencia;
+}
+
+function aplicarOverscroll(valor) {
+    overscrollOffset = valor;
+    arcadeScreen.style.transform = `translateY(${valor}px)`;
+}
+
+function voltarOverscroll() {
+    if (!overscrollActive) return;
+
+    overscrollActive = false;
+
+    arcadeScreen.classList.add("overscroll-return");
+    arcadeScreen.style.transform = "translateY(0)";
+
+    setTimeout(() => {
+        arcadeScreen.classList.remove("overscroll-return");
+        overscrollOffset = 0;
+    }, 450);
+}
+
+window.addEventListener("wheel", (event) => {
+
+    const noFundo =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 1;
+
+    // Tentando puxar para baixo estando no fundo
+    if (noFundo && event.deltaY > 0) {
+
+        event.preventDefault();
+
+        overscrollActive = true;
+
+        const novoOffset =
+            calcularElastic(overscrollOffset + event.deltaY);
+
+        aplicarOverscroll(novoOffset);
 
         return;
     }
 
-    adminLog.slice(0, 5).forEach((acao) => {
-        const item = document.createElement("div");
-
-        item.className = "admin-log-item";
-        item.textContent = acao;
-
-        adminLogList.appendChild(item);
-    });
-}
-
-renderizarAdminLog();
-
-function registrarAcao(mensagem) {
-    adminLog.unshift(mensagem);
-
-    if (adminLog.length > 5) {
-        adminLog = adminLog.slice(0, 5);
+    // Se voltou para dentro da área normal
+    if (overscrollActive) {
+        voltarOverscroll();
     }
 
-    renderizarAdminLog();
-}
+}, { passive: false });
 
 
+// ---------- ELASTIC OVERSCROLL — MOBILE ----------
 
+let touchStartY = 0;
+let touchAtBottom = false;
 
+window.addEventListener("touchstart", (event) => {
 
+    if (event.touches.length !== 1) return;
 
-// ---------- RENDERIZAR USUÁRIOS ----------
+    touchStartY = event.touches[0].clientY;
 
-function renderizarUsuarios() {
+    touchAtBottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 1;
 
-    usersTableBody.innerHTML = "";
+}, { passive: true });
 
-    rankingData.forEach((usuario, index) => {
 
-        const levelAtual =
-            calcularLevel(usuario.pontos);
+window.addEventListener("touchmove", (event) => {
 
-        const row =
-            document.createElement("tr");
+    if (event.touches.length !== 1) return;
+    if (!touchAtBottom) return;
 
-        row.innerHTML = `
-            <td>
-                ${index + 1}
-            </td>
+    const currentY = event.touches[0].clientY;
+    const delta = currentY - touchStartY;
 
-            <td>
-                ${usuario.nome}
-            </td>
+    // Só ativa quando o dedo está puxando para cima
+    if (delta >= 0) return;
 
-            <td>
-                ${usuario.pontos.toLocaleString("pt-BR")}
-            </td>
+    event.preventDefault();
 
-            <td>
-                LV. ${levelAtual}
-            </td>
+    overscrollActive = true;
 
-            <td class="user-actions">
+    const novoOffset =
+        calcularElastic(Math.abs(delta));
 
-				<button
-				type="button"
-				class="user-edit-button"
-				data-index="${index}"
-			>
-				EDITAR
-			</button>
+    aplicarOverscroll(-novoOffset);
 
-			<button
-				type="button"
-				class="user-remove-button"
-				data-index="${index}"
-			>
-				REMOVER
-			</button>
-            </td>
-        `;
+}, { passive: false });
 
-        usersTableBody.appendChild(row);
 
-    });
-	
-configurarBotoesEditar();
-configurarBotoesRemover();
-atualizarDashboard();
-renderizarPreview();
+window.addEventListener("touchend", () => {
 
-}
+    if (!overscrollActive) return;
 
-		//------------ATUALIZAR RANK--------------/
+    voltarOverscroll();
 
-function renderizarPreview() {
-    const previewRanking = document.querySelector("#preview-ranking");
+    touchStartY = 0;
+    touchAtBottom = false;
 
-    if (!previewRanking) return;
-
-    previewRanking.innerHTML = "";
-
-    rankingData.forEach((usuario, index) => {
-        const posicao = index + 1;
-
-        let classeTop = "";
-
-        if (posicao === 1) {
-            classeTop = "top-1";
-        } else if (posicao === 2) {
-            classeTop = "top-2";
-        } else if (posicao === 3) {
-            classeTop = "top-3";
-        }
-
-        const linha = document.createElement("div");
-
-        linha.className = `preview-ranking-row ${classeTop}`;
-
-        linha.innerHTML = `
-            <div class="preview-position">
-                #${posicao}
-            </div>
-
-            <div class="preview-name">
-                ${usuario.nome}
-            </div>
-
-            <div class="preview-xp">
-                ${usuario.pontos.toLocaleString("pt-BR")} XP
-            </div>
-
-            <div class="preview-level">
-                LV. ${calcularLevel(usuario.pontos)}
-            </div>
-        `;
-
-        previewRanking.appendChild(linha);
-    });
-}
-
-
-		//----------------RENDERIZAR ADMINS---------------
-
-function renderizarAdmins() {
-    const adminsTableBody =
-        document.querySelector("#admins-table-body");
-
-    if (!adminsTableBody) return;
-
-    adminsTableBody.innerHTML = "";
-
-    adminsData.forEach((admin, index) => {
-
-        const row =
-            document.createElement("tr");
-
-        row.innerHTML = `
-            <td>
-                ${admin.login}
-            </td>
-
-            <td>
-                ${admin.nome}
-            </td>
-
-            <td>
-                <div class="admin-actions">
-
-                    <button
-                        type="button"
-                        class="admin-edit-button"
-                        data-index="${index}"
-                    >
-                        EDITAR
-                    </button>
-
-                    <button
-                        type="button"
-                        class="admin-remove-button"
-                        data-index="${index}"
-                    >
-                        REMOVER
-                    </button>
-
-                </div>
-            </td>
-        `;
-
-        adminsTableBody.appendChild(row);
-    });
-	
-configurarBotoesEditarAdmin();
-configurarBotoesRemoverAdmin();
-
-}
-
-renderizarAdmins();
-
-
-// ---------- USER SEARCH ----------
-
-const userSearch = document.querySelector("#user-search");
-
-if (userSearch) {
-
-    userSearch.addEventListener("input", () => {
-
-        const searchTerm = userSearch.value
-            .trim()
-            .toLowerCase();
-
-
-        // Nenhuma busca: mostra todos
-        if (searchTerm === "") {
-
-            renderizarUsuarios();
-
-            return;
-
-        }
-
-
-        // Filtra os usuários pelo nome
-        const usuariosFiltrados = rankingData.filter((usuario) => {
-
-            return usuario.nome
-                .toLowerCase()
-                .includes(searchTerm);
-
-        });
-
-
-        // Guarda temporariamente o ranking original
-        const rankingOriginal = rankingData;
-
-        // Renderiza somente os resultados encontrados
-        rankingData = usuariosFiltrados;
-
-        renderizarUsuarios();
-
-        // Recupera o ranking completo
-        rankingData = rankingOriginal;
-
-    });
-
-}
-
-// ---------- ADD USER MODAL ----------
-
-const addUserButton =
-    document.querySelector("#add-user-button");
-
-const addUserModal =
-    document.querySelector("#add-user-modal");
-
-const addUserClose =
-    document.querySelector("#add-user-close");
-
-const addUserCancel =
-    document.querySelector("#add-user-cancel");
-
-
-function abrirModalUsuario() {
-
-    if (!addUserModal) return;
-
-    addUserModal.style.display = "flex";
-
-}
-
-
-function fecharModalUsuario() {
-
-    if (!addUserModal) return;
-
-    addUserModal.style.display = "none";
-
-}
-
-
-// Abrir modal
-if (addUserButton) {
-
-    addUserButton.addEventListener("click", () => {
-
-        abrirModalUsuario();
-
-    });
-
-}
-
-
-// Fechar pelo X
-if (addUserClose) {
-
-    addUserClose.addEventListener("click", () => {
-
-        fecharModalUsuario();
-
-    });
-
-}
-
-
-// Fechar pelo botão CANCELAR
-if (addUserCancel) {
-
-    addUserCancel.addEventListener("click", () => {
-
-        fecharModalUsuario();
-
-    });
-
-}
-
-
-// Fechar clicando fora do modal
-if (addUserModal) {
-
-    addUserModal.addEventListener("click", (event) => {
-
-        if (event.target === addUserModal) {
-
-            fecharModalUsuario();
-
-        }
-
-    });
-
-}
-
-// ---------- EDIT USER MODAL ----------
-
-const editUserModal =
-    document.querySelector("#edit-user-modal");
-
-const editUserClose =
-    document.querySelector("#edit-user-close");
-
-const editUserCancel =
-    document.querySelector("#edit-user-cancel");
-
-const editUserName =
-    document.querySelector("#edit-user-name");
-
-const editUserPoints =
-    document.querySelector("#edit-user-points");
-
-const editUserCurrentPhoto =
-    document.querySelector("#edit-user-current-photo");
-
-
-// Usuário atualmente sendo editado
-let usuarioEditando = null;
-
-
-// ---------- ABRIR E PREENCHER MODAL ----------
-
-function abrirModalEdicao(index) {
-
-    if (!editUserModal) return;
-
-    const usuario = rankingData[index];
-
-    if (!usuario) return;
-
-
-    usuarioEditando = index;
-
-
-    // Preencher nome
-    editUserName.value = usuario.nome;
-
-
-    // Preencher XP
-    editUserPoints.value = usuario.pontos;
-
-
-    // Carregar foto atual
-    editUserCurrentPhoto.src =
-        `../assets/profile/${usuario.nome}.png`;
-
-
-    // Caso a foto não exista
-    editUserCurrentPhoto.onerror = () => {
-
-        editUserCurrentPhoto.src =
-            "../assets/profile/default.png";
-
-    };
-
-
-    // Abrir modal
-    editUserModal.style.display = "flex";
-
-}
-
-
-// ---------- FECHAR MODAL ----------
-
-function fecharModalEdicao() {
-
-    if (!editUserModal) return;
-
-    editUserModal.style.display = "none";
-
-    usuarioEditando = null;
-
-}
-
-
-// ---------- BOTÕES EDITAR ----------
-
-function configurarBotoesEditar() {
-
-    const editButtons =
-        document.querySelectorAll(".user-edit-button");
-
-
-    editButtons.forEach((button) => {
-
-        button.addEventListener("click", () => {
-
-            const index =
-                Number(button.dataset.index);
-
-            abrirModalEdicao(index);
-
-        });
-
-    });
-
-}
-
-function configurarBotoesRemover() {
-    const removeButtons = document.querySelectorAll(".user-remove-button");
-
-    removeButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-            const index = Number(button.dataset.index);
-            const usuario = rankingData[index];
-
-            if (!usuario) return;
-
-            const confirmar = confirm(
-                `Tem certeza que deseja remover o usuário "${usuario.nome}"?`
-            );
-
-            if (!confirmar) return;
-
-            rankingData.splice(index, 1);
-
-            renderizarUsuarios();
-        });
-    });
-}
-
-
-// Fechar pelo X
-if (editUserClose) {
-
-    editUserClose.addEventListener("click", () => {
-
-        fecharModalEdicao();
-
-    });
-
-}
-
-
-// Fechar pelo botão CANCELAR
-if (editUserCancel) {
-
-    editUserCancel.addEventListener("click", () => {
-
-        fecharModalEdicao();
-
-    });
-
-}
-
-
-// Fechar clicando fora
-if (editUserModal) {
-
-    editUserModal.addEventListener("click", (event) => {
-
-        if (event.target === editUserModal) {
-
-            fecharModalEdicao();
-
-        }
-
-    });
-
-}
-
-const editUserForm = document.querySelector("#edit-user-form");
-
-if (editUserForm) {
-    editUserForm.addEventListener("submit", (event) => {
-        event.preventDefault();
-
-        if (usuarioEditando === null) return;
-
-        const nome = editUserName.value.trim();
-        const pontos = Number(editUserPoints.value);
-
-        if (nome === "") {
-            alert("O nome do usuário não pode estar vazio.");
-            editUserName.focus();
-            return;
-        }
-
-        if (!Number.isInteger(pontos) || pontos < 0) {
-            alert("O XP precisa ser um número inteiro válido.");
-            editUserPoints.focus();
-            return;
-        }
-
-        const usuarioExiste = rankingData.some((usuario, index) => {
-            if (index === usuarioEditando) return false;
-
-            return usuario.nome.toLowerCase() === nome.toLowerCase();
-        });
-
-        if (usuarioExiste) {
-            alert("Já existe um usuário com esse nome.");
-            editUserName.focus();
-            return;
-        }
-
-        rankingData[usuarioEditando].nome = nome;
-        rankingData[usuarioEditando].pontos = pontos;
-
-        rankingData.sort((a, b) => b.pontos - a.pontos);
-
-        renderizarUsuarios();
-        fecharModalEdicao();
-    });
-}
-
-// ---------- VALIDAR NOVO USUÁRIO ----------
-
-const addUserForm =
-    document.querySelector("#add-user-form");
-
-
-if (addUserForm) {
-
-    addUserForm.addEventListener("submit", (event) => {
-
-        event.preventDefault();
-
-
-        const nameInput =
-            document.querySelector("#add-user-name");
-
-        const pointsInput =
-            document.querySelector("#add-user-points");
-
-
-        const nome =
-            nameInput.value.trim();
-
-        const pontos =
-            Number(pointsInput.value);
-
-
-        // Nome vazio
-        if (nome === "") {
-
-            alert("O nome do usuário não pode estar vazio.");
-
-            nameInput.focus();
-
-            return;
-
-        }
-
-
-        // XP inválido
-        if (!Number.isInteger(pontos) || pontos < 0) {
-
-            alert("O XP inicial precisa ser um número inteiro válido.");
-
-            pointsInput.focus();
-
-            return;
-
-        }
-
-
-        // Verificar nome duplicado
-        const usuarioExiste =
-            rankingData.some((usuario) => {
-
-                return usuario.nome.toLowerCase() === nome.toLowerCase();
-
-            });
-
-
-        if (usuarioExiste) {
-
-            alert("Já existe um usuário com esse nome.");
-
-            nameInput.focus();
-
-            return;
-
-        }
-
-
-        // Criar novo usuário
-		const novoUsuario = {
-			nome: nome,
-			pontos: pontos
-		};
-
-
-		// Adicionar ao ranking
-		rankingData.push(novoUsuario);
-
-
-		// Reordenar ranking
-		rankingData.sort((a, b) => b.pontos - a.pontos);
-
-
-		// Atualizar tabela
-		renderizarUsuarios();
-		
-
-		// Fechar modal
-		fecharModalUsuario();
-
-
-		// Limpar formulário
-		addUserForm.reset();
-
-    });
-
-}
+}, { passive: true });
