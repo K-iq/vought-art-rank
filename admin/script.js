@@ -2093,6 +2093,17 @@ if (addUserForm) {
     addUserForm.addEventListener("submit", async (event) => {
 
         event.preventDefault();
+		
+		const addUserSubmit =
+			addUserForm.querySelector('button[type="submit"]');
+
+		if (addUserSubmit) {
+			addUserSubmit.disabled = true;
+			addUserSubmit.dataset.originalText =
+				addUserSubmit.textContent;
+
+			addUserSubmit.textContent = "SALVANDO...";
+		}
 
         const nameInput =
             document.querySelector("#add-user-name");
@@ -2346,6 +2357,12 @@ if (addUserForm) {
                 "Erro ao conectar com a API:",
                 error
             );
+			
+			if (addUserSubmit) {
+				addUserSubmit.disabled = false;
+				addUserSubmit.textContent =
+					addUserSubmit.dataset.originalText || "SALVAR";
+			}
 
             alert(
                 "Não foi possível conectar ao servidor."
