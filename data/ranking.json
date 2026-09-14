@@ -1,5 +1,9 @@
 [
     {
+        "nome": "GABRIEL_M",
+        "pontos": 300
+    },
+    {
         "nome": "BECCA",
         "pontos": 100
     },
@@ -12,19 +16,19 @@
         "pontos": 100
     },
     {
+        "nome": "SCYNTROS",
+        "pontos": 100
+    },
+    {
+        "nome": "MANFROI",
+        "pontos": 100
+    },
+    {
         "nome": "MITTZ",
         "pontos": 0
     },
     {
-        "nome": "SCYNTROS",
-        "pontos": 0
-    },
-    {
         "nome": "CRIS",
-        "pontos": 0
-    },
-    {
-        "nome": "MANFROI",
         "pontos": 0
     }
 ]
