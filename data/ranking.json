@@ -8,16 +8,16 @@
         "pontos": 100
     },
     {
-        "nome": "MITTZ",
-        "pontos": 0
-    },
-    {
         "nome": "LUCKY",
         "pontos": 100
     },
     {
+        "nome": "MITTZ",
+        "pontos": 0
+    },
+    {
         "nome": "SCYNTROS",
-        "pontos": 100
+        "pontos": 0
     },
     {
         "nome": "CRIS",
@@ -25,6 +25,6 @@
     },
     {
         "nome": "MANFROI",
-        "pontos": 100
+        "pontos": 0
     }
 ]
