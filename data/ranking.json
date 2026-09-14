@@ -1,10 +1,14 @@
 [
     {
-        "nome": "LUCKY",
+        "nome": "MANFROI",
         "pontos": 100
     },
     {
         "nome": "MITTZ",
+        "pontos": 0
+    },
+    {
+        "nome": "LUCKY",
         "pontos": 0
     },
     {
@@ -17,10 +21,6 @@
     },
     {
         "nome": "CRIS",
-        "pontos": 0
-    },
-    {
-        "nome": "MANFROI",
         "pontos": 0
     },
     {
