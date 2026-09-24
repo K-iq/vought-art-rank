@@ -16,6 +16,10 @@
         "pontos": 350
     },
     {
+        "nome": "CRIS",
+        "pontos": 300
+    },
+    {
         "nome": "MIRIAN",
         "pontos": 200
     },
@@ -41,10 +45,6 @@
     },
     {
         "nome": "MITTZ",
-        "pontos": 100
-    },
-    {
-        "nome": "CRIS",
         "pontos": 100
     }
 ]
