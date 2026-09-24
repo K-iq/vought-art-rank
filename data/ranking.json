@@ -1,5 +1,9 @@
 [
     {
+        "nome": "BADUMTIS",
+        "pontos": 600
+    },
+    {
         "nome": "GABRIEL_M",
         "pontos": 500
     },
@@ -25,10 +29,6 @@
     },
     {
         "nome": "SCYNTROS",
-        "pontos": 100
-    },
-    {
-        "nome": "BADUMTIS",
         "pontos": 100
     },
     {
