@@ -8,6 +8,10 @@
         "pontos": 500
     },
     {
+        "nome": "BIG",
+        "pontos": 450
+    },
+    {
         "nome": "MANFROI",
         "pontos": 350
     },
@@ -17,10 +21,6 @@
     },
     {
         "nome": "BECCA",
-        "pontos": 100
-    },
-    {
-        "nome": "BIG",
         "pontos": 100
     },
     {
