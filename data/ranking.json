@@ -16,12 +16,12 @@
         "pontos": 450
     },
     {
-        "nome": "MANFROI",
-        "pontos": 350
-    },
-    {
         "nome": "CRIS",
         "pontos": 400
+    },
+    {
+        "nome": "MANFROI",
+        "pontos": 350
     },
     {
         "nome": "MIRIAN",
@@ -45,6 +45,10 @@
     },
     {
         "nome": "MITTZ",
+        "pontos": 100
+    },
+    {
+        "nome": "GUSTAVO",
         "pontos": 100
     }
 ]
